@@ -13,11 +13,11 @@
    ───────────────────────────────────────── */
 :root[data-theme="light"] {
     /* Backgrounds */
-    --color-background: #a9cdec;
+    --color-background: #dceaf6;
     --color-surface: #ffffff;
 
     /* Lists (pyjamas) */
-    --color-list-row-light: #a9cdec;
+    --color-list-row-light: #dceaf6;
     --color-list-row-dark: #8fb9df;
 
     /* Text */

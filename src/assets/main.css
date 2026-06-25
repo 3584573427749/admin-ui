@@ -13,11 +13,6 @@ body {
     font-size: var(--font-size-base);
     background-color: var(--color-background);
     color: var(--color-text);
-
-    background-image: url('@/assets/images/bakgrund.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
 }
 
 /* ─────────────────────────────────────────
@@ -68,10 +63,8 @@ body {
     opacity: 0.85;
 }
 
-.app-header__title {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-text);
+.app-header__logo {
+    height: 5vh;
 }
 
 .app-menu__backdrop {
@@ -97,6 +90,7 @@ body {
     background-color: var(--color-background);
 
     padding: 1.5rem;
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
 
@@ -112,7 +106,7 @@ body {
     background-image: url('@/assets/images/logo.svg');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 30%;
+    background-size: 80%;
 
     opacity: 0.2; /* 80% transparent */
 

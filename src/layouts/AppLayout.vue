@@ -1,8 +1,8 @@
 <script setup>
 import {useRouter} from 'vue-router'
 
-import AppHeader from '@/components/layout/AppHeader.vue'
-import AppFooter from '@/components/layout/AppFooter.vue'
+import AppHeader from '@/layouts/AppHeader.vue'
+import AppFooter from '@/layouts/AppFooter.vue'
 
 const router = useRouter()
 

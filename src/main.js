@@ -1,13 +1,24 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import router from './router'
-import App from './App.vue'
+import './assets/base.css';
+import './assets/main.css';
 
-import './pwa/registerServiceWorker'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import router from './router';
+import App from './App.vue';
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(createPinia())
-app.use(router)
+app.use(createPinia());
+app.use(router);
 
-app.mount('#app')
+app.mount('#app');
+
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+function applyTheme() {
+    document.documentElement.setAttribute('data-theme', prefersDark.matches ? 'dark' : 'light');
+}
+
+applyTheme();
+
+prefersDark.addEventListener('change', applyTheme);

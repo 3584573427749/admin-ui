@@ -1,4 +1,4 @@
-import { getAccessToken, setAccessToken, clearAccessToken } from '../stores/tokenStore';
+import { getAccessToken, setAccessToken, clearAccessToken } from "@/stores/tokenStorage.js";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -117,4 +117,3 @@ export const api = {
     put: (path, data) => request('PUT', path, data),
     delete: (path) => request('DELETE', path)
 };
-``
