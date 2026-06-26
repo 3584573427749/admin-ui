@@ -1,7 +1,7 @@
 <script setup>
-import logo from '@/assets/images/logo.svg';
+import NavBar from '@/components/NavBar.vue';
 
-const props = defineProps({
+defineProps({
     items: {
         type: Array,
         required: true
@@ -17,20 +17,8 @@ function navigate(route) {
 
 <template>
     <header class="app-header">
-        <span>
-            <img :src="logo" class="app-header__logo" />
-        </span>
+        <img src="@/assets/images/logo.svg" alt="Simning.ax" class="app-header__logo" />
 
-        <nav class="app-header__nav">
-            <button
-                v-for="item in items"
-                :key="item.route"
-                class="app-header__link"
-                type="button"
-                @click="navigate(item.route)"
-            >
-                {{ item.label }}
-            </button>
-        </nav>
+        <NavBar :items="items" @navigate="navigate" />
     </header>
 </template>
