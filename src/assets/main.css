@@ -24,6 +24,7 @@ body {
    ───────────────────────────────────────── */
 #app {
     background-image: url('src/assets/images/water-background.jpg');
+    background-repeat: repeat;
 }
 
 .app-layout {

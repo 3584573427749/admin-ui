@@ -13,14 +13,19 @@
         "postinstall": "mkdir -p .ci && touch .ci/frontend .ci/dockerdeploy"
     },
     "dependencies": {
+        "@mdi/font": "^7.4.47",
         "pinia": "^2.1.7",
         "vue": "^3.4.0",
-        "vue-router": "^4.3.0"
+        "vue-router": "^4.3.0",
+        "vuetify": "^4.1.2"
     },
     "devDependencies": {
-        "@vitejs/plugin-vue": "^5.0.0",
+        "@vitejs/plugin-vue": "^6.0.7",
         "eslint": "^8.56.0",
         "prettier": "^3.2.5",
         "vite": "^8.1.0"
+    },
+    "allowScripts": {
+        "vue-demi@0.14.10": true
     }
 }
