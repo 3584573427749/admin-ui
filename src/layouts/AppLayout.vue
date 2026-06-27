@@ -47,9 +47,9 @@ function navigateTo(route) {
 <template>
     <div class="app-layout">
         <AppHeader :items="menuItems" @navigate="navigateTo" />
-        <main class="app-main">
+        <content class="app-main">
             <router-view />
-        </main>
+        </content>
 
         <AppFooter />
     </div>
