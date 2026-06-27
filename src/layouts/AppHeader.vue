@@ -1,36 +1,24 @@
 <script setup>
+import NavBar from '@/components/NavBar.vue';
 
-const props = defineProps({
-  items: {
-    type: Array,
-    required: true
-  }
-})
+defineProps({
+    items: {
+        type: Array,
+        required: true
+    }
+});
 
-const emit = defineEmits(['navigate'])
+const emit = defineEmits(['navigate']);
 
 function navigate(route) {
-  emit('navigate', route)
+    emit('navigate', route);
 }
-
 </script>
 
 <template>
-  <header class="app-header">
-    <span class="app-header__title">
-      App
-    </span>
+    <header class="app-header">
+        <img src="@/assets/images/logo.svg" alt="Simning.ax" class="app-header__logo" />
 
-    <nav class="app-header__nav">
-      <button
-          v-for="item in items"
-          :key="item.route"
-          class="app-header__link"
-          type="button"
-          @click="navigate(item.route)"
-      >
-        {{ item.label }}
-      </button>
-    </nav>
-  </header>
+        <NavBar :items="items" @navigate="navigate" />
+    </header>
 </template>

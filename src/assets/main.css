@@ -1,6 +1,10 @@
 /* ─────────────────────────────────────────
    Reset / grund
    ───────────────────────────────────────── */
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
     margin: 0;
@@ -13,16 +17,16 @@ body {
     font-size: var(--font-size-base);
     background-color: var(--color-background);
     color: var(--color-text);
-
-    background-image: url('@/assets/images/bakgrund.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
 }
 
 /* ─────────────────────────────────────────
    Layout
    ───────────────────────────────────────── */
+#app {
+    background-image: url('src/assets/images/water-background.jpg');
+    background-repeat: repeat;
+}
+
 .app-layout {
     min-height: 100vh;
     display: flex;
@@ -68,10 +72,8 @@ body {
     opacity: 0.85;
 }
 
-.app-header__title {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-text);
+.app-header__logo {
+    height: 3.8rem;
 }
 
 .app-menu__backdrop {
@@ -97,7 +99,7 @@ body {
     background-color: var(--color-background);
 
     padding: 1.5rem;
-    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
 
     position: relative;
@@ -112,7 +114,7 @@ body {
     background-image: url('@/assets/images/logo.svg');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 30%;
+    background-size: 80%;
 
     opacity: 0.2; /* 80% transparent */
 

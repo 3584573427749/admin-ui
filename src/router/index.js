@@ -1,11 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
-import AppLayout from '@/layouts/AppLayout.vue'
-import LoginView from '@/views/LoginView.vue'
-import HomeView from '@/views/HomeView.vue'
-import AboutView from '@/views/AboutView.vue'
+import AppLayout from '@/layouts/AppLayout.vue';
+import LoginView from '@/views/LoginView.vue';
+import HomeView from '@/views/HomeView.vue';
+import AboutView from '@/views/AboutView.vue';
+import NotFoundView from '@/views/404View.vue';
 
-import { registerAuthGuard } from './guard'
+import { registerAuthGuard } from './guard';
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -21,7 +22,7 @@ export const router = createRouter({
         {
             path: '/',
             component: AppLayout,
-            meta: { requiresAuth: true },
+            //           meta: { requiresAuth: true },
             children: [
                 {
                     path: '',
@@ -32,11 +33,18 @@ export const router = createRouter({
                     path: 'about',
                     name: 'about',
                     component: AboutView
+                },
+                {
+                    path: '/:pathMatch(.*)*',
+                    name: 'notFound',
+                    component: NotFoundView
                 }
             ]
         }
     ]
-})
+});
 
 // Global auth-guard (redan byggd)
-registerAuthGuard(router)
+registerAuthGuard(router);
+
+export default router;

@@ -29,7 +29,7 @@ async function initializeApp() {
  */
 onMounted(async () => {
   try {
-    await api.post('/refresh')
+//    await api.post('/refresh')
     authStore.setAuthenticated(true)
   } catch (err) {
     if (err?.status === 401) {
