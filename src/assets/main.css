@@ -251,3 +251,33 @@ a:active {
     background-color: var(--color-list-row-dark);
 }
 
+/* ─────────────────────────────────────────
+   Vuetify
+   ───────────────────────────────────────── */
+.tab-panel__content {
+    padding: 1.5rem;
+
+    border: 2px solid var(--color-primary);
+
+    border-radius: 0 8px 8px 8px;
+}
+
+.ui-selected ,
+.v-tab.v-tab--selected {
+    background-color: var(--color-primary) !important;
+    color: white !important;
+    border-radius: 8px 8px 0 0;
+}
+
+.ui-selectable:hover:not(.ui-selected),
+.v-tab:hover:not(.v-tab--selected) {
+    background-color: var(--color-list-row-dark);
+}
+
+.v-field {
+    background-color: var(--color-surface);
+}
+
+.v-btn {
+    background-color: var(--color-surface) !important;
+}
