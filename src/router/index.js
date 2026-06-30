@@ -30,7 +30,7 @@ export const router = createRouter({
                     component: HomeView
                 },
                 {
-                    path: 'användare',
+                    path: 'anvandare',
                     name: 'users',
                     component: () => import('../views/UsersView.vue')
                 },

@@ -108,7 +108,7 @@ function deleteUser() {
                 <div class="tab-panel__content">
                     <v-window v-model="activeTab">
                         <v-window-item value="info">
-                            <div class="user-form">
+                            <div class="user-form" density="compact">
                                 <v-text-field v-model="selectedUser.firstName" label="Förnamn" />
 
                                 <v-text-field v-model="selectedUser.lastName" label="Efternamn" />
