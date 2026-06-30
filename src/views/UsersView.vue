@@ -1,32 +1,16 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { useUsersStore } from '@/stores/userStore.js';
+import { storeToRefs } from 'pinia';
+
+const usersStore = useUsersStore();
+const { users, selectedUser, loading } = storeToRefs(usersStore);
+const availableRoles = ['Verksamhetsledare', 'Ledare', 'Styrelse', 'Domare'];
 
 const activeTab = ref('info');
 
-const users = ref([
-    {
-        id: 1,
-        firstName: 'Kalle',
-        lastName: 'Kula',
-        email: 'kalle@kula.se',
-        active: true,
-        roles: ['Styrelse']
-    },
-    {
-        id: 2,
-        firstName: 'Anna',
-        lastName: 'Andersson',
-        email: 'anna@example.com',
-        active: true,
-        roles: ['Ledare']
-    }
-]);
-
-const availableRoles = ['Verksamhetsledare', 'Ledare', 'Styrelse', 'Domare'];
-const selectedUserId = ref(users.value[0].id);
-const selectedUser = ref({
-    ...users.value[0],
-    roles: [...users.value[0].roles]
+onMounted(async () => {
+    await usersStore.loadUsers();
 });
 
 function isRoleSelected(role) {
@@ -44,34 +28,6 @@ function toggleRole(role) {
         roles.push(role);
     }
 }
-
-function selectUser(user) {
-    selectedUserId.value = user.id;
-
-    selectedUser.value = {
-        ...user,
-        roles: [...user.roles]
-    };
-}
-
-function createUser() {
-    selectedUser.value = {
-        id: null,
-        firstName: '',
-        lastName: '',
-        email: '',
-        active: true,
-        roles: []
-    };
-}
-
-function saveUser() {
-    console.log('Save', selectedUser.value);
-}
-
-function deleteUser() {
-    console.log('Delete', selectedUser.value);
-}
 </script>
 
 <template>
@@ -87,10 +43,10 @@ function deleteUser() {
                     :class="[
                         'ui-selectable',
                         {
-                            'ui-selected': user.id === selectedUserId
+                            'ui-selected': user.id === selectedUser?.id
                         }
                     ]"
-                    @click="selectUser(user)"
+                    @click="userStore.selectUser(user)"
                 />
             </v-list>
         </div>
@@ -132,13 +88,23 @@ function deleteUser() {
                                 </div>
 
                                 <div class="button-row">
-                                    <v-btn color="primary" @click="saveUser"> Spara </v-btn>
+                                    <v-btn color="primary" @click="usersStore.saveUser">
+                                        Spara
+                                    </v-btn>
 
-                                    <v-btn color="error" variant="outlined" @click="deleteUser">
+                                    <v-btn
+                                        color="error"
+                                        variant="outlined"
+                                        @click="usersStore.deleteUser"
+                                    >
                                         Radera
                                     </v-btn>
 
-                                    <v-btn color="success" variant="outlined" @click="createUser">
+                                    <v-btn
+                                        color="success"
+                                        variant="outlined"
+                                        @click="usersStore.createUser"
+                                    >
                                         Ny
                                     </v-btn>
                                 </div>
