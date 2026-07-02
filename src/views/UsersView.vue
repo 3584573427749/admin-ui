@@ -46,7 +46,7 @@ function toggleRole(role) {
                             'ui-selected': user.id === selectedUser?.id
                         }
                     ]"
-                    @click="userStore.selectUser(user)"
+                    @click="usersStore.selectUser(user)"
                 />
             </v-list>
         </div>

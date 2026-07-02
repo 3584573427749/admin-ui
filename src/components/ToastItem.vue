@@ -101,6 +101,8 @@ onUnmounted(() => {
 .toast__message {
     flex: 1;
     margin-right: 0.75rem;
+
+    white-space: pre-line;
 }
 
 .toast__close {

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, toRaw } from 'vue';
+import { useNotificationStore } from '@/stores/notificationStore';
 
 import * as userService from '@/services/userService';
 
@@ -17,6 +18,7 @@ function newUser() {
 }
 
 export const useUsersStore = defineStore('usersStore', () => {
+    const notificationStore = useNotificationStore();
     const users = ref([]);
     const selectedUser = ref(newUser());
 
@@ -56,26 +58,31 @@ export const useUsersStore = defineStore('usersStore', () => {
 
     async function saveUser() {
         const user = selectedUser.value;
+        try {
+            if (user.id) {
+                selectedUser.value = await userService.updateUser(user.id, {
+                    id: user.id,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    isActive: 'true',
+                    createdAt: user.createdAt,
+                    updatedAt: user.updatedAt
+                });
+                notificationStore.success('Användaren uppdaterades.');
+            } else {
+                selectedUser.value = await userService.createUser({
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName
+                });
+                notificationStore.success('Användaren skapades.');
+            }
 
-        if (user.id) {
-            selectedUser.value = await userService.updateUser(user.id, {
-                id: user.id,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                isActive: "true",
-                createdAt: user.createdAt,
-                updatedAt: user.updatedAt
-            });
-        } else {
-            selectedUser.value = await userService.createUser({
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName
-            });
+            await loadUsers();
+        } catch (error) {
+            notificationStore.error(error);
         }
-
-        await loadUsers();
     }
 
     async function deleteSelectedUser() {
@@ -85,12 +92,16 @@ export const useUsersStore = defineStore('usersStore', () => {
             createNewUser();
             return;
         }
+        try {
+            await userService.deleteUser(id);
+            notificationStore.success('Användaren togs bort.');
 
-        await userService.deleteUser(id);
+            await loadUsers();
 
-        await loadUsers();
-
-        createNewUser();
+            createNewUser();
+        } catch (error) {
+            notificationStore.error(error);
+        }
     }
 
     return {
