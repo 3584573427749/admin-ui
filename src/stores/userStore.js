@@ -59,9 +59,13 @@ export const useUsersStore = defineStore('usersStore', () => {
 
         if (user.id) {
             selectedUser.value = await userService.updateUser(user.id, {
+                id: user.id,
                 email: user.email,
                 firstName: user.firstName,
-                lastName: user.lastName
+                lastName: user.lastName,
+                isActive: "true",
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt
             });
         } else {
             selectedUser.value = await userService.createUser({

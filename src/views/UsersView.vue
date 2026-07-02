@@ -66,15 +66,9 @@ function toggleRole(role) {
                         <v-window-item value="info">
                             <div class="user-form" density="compact">
                                 <v-text-field v-model="selectedUser.firstName" label="Förnamn" />
-
                                 <v-text-field v-model="selectedUser.lastName" label="Efternamn" />
-
                                 <v-text-field v-model="selectedUser.email" label="E-post" />
-
-                                <v-checkbox v-model="selectedUser.active" label="Aktiv" />
-
                                 <h4>Roller</h4>
-
                                 <div class="role-panel">
                                     <v-checkbox
                                         v-for="role in availableRoles"
@@ -91,19 +85,17 @@ function toggleRole(role) {
                                     <v-btn color="primary" @click="usersStore.saveUser">
                                         Spara
                                     </v-btn>
-
                                     <v-btn
                                         color="error"
                                         variant="outlined"
-                                        @click="usersStore.deleteUser"
+                                        @click="usersStore.deleteSelectedUser"
                                     >
                                         Radera
                                     </v-btn>
-
                                     <v-btn
                                         color="success"
                                         variant="outlined"
-                                        @click="usersStore.createUser"
+                                        @click="usersStore.createNewUser"
                                     >
                                         Ny
                                     </v-btn>
