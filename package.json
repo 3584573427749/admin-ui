@@ -12,7 +12,9 @@
         "format:check": "prettier --check .",
         "postinstall": "mkdir -p .ci && touch .ci/frontend .ci/dockerdeploy",
         "generate-types": "openapi-typescript openapi.yaml -o src/generated/types.ts",
-        "test": "vitest"
+        "test:unit": "vitest run",
+        "test:e2e": "playwright test",
+        "test": "npm run test:unit && npm run test:e2e"
     },
     "dependencies": {
         "@mdi/font": "^7.4.47",
@@ -22,6 +24,7 @@
         "vuetify": "^3.12.8"
     },
     "devDependencies": {
+        "@playwright/test": "^1.61.1",
         "@vitejs/plugin-vue": "^6.0.7",
         "@vue/test-utils": "^2.4.11",
         "eslint": "^8.56.0",
