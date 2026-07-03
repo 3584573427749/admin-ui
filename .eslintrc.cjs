@@ -4,9 +4,11 @@ module.exports = {
         browser: true,
         es2021: true
     },
-    extends: [
-        'eslint:recommended'
-    ],
+
+    globals: {
+        __APP_VERSION__: 'readonly'
+    },
+    extends: ['eslint:recommended'],
     parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module'
@@ -16,4 +18,4 @@ module.exports = {
         'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
         'no-console': 'off'
     }
-}
+};
