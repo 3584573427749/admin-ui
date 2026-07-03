@@ -1,0 +1,341 @@
+openapi: 3.0.3
+info:
+  title: Admin-UI
+  version: 0.1.0
+  description: >-
+    Samlad OpenAPI-specifikation för Admin UI i simning.ax.
+    Specifikationen innehåller kontrakt för de backend-tjänster som
+    används av administrationsgränssnittet och används som underlag
+    för generering av TypeScript-interface.
+
+paths:
+  /users:
+    post:
+      summary: Create user
+      operationId: createUser
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                  data:
+                    $ref: '#/components/schemas/User'
+
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 409
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 422
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Get all users
+      operationId: getAllUsers
+      tags:
+        - Users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      operationId: getUserById
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update user
+      operationId: updateUser
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - data
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    $ref: '#/components/schemas/User'
+
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: User exists
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 409
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 422
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Delete user
+      operationId: deleteUser
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: User deleted
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - statusCode
+                  - error
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  error:
+                    $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - type
+        - message
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          nullable: true
+          additionalProperties: true
+
+    CreateUserRequest:
+      type: object
+      required:
+        - email
+        - firstName
+        - lastName
+      properties:
+        email:
+          type: string
+          format: email
+          example: test@example.com
+        firstName:
+          type: string
+          minLength: 2
+          example: User
+        lastName:
+          type: string
+          minLength: 2
+          example: Name
+
+    User:
+      type: object
+      required:
+        - id
+        - email
+        - firstName
+        - lastName
+        - roles
+        - updatedAt
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+
+        email:
+          type: string
+          format: email
+
+        firstName:
+          type: string
+
+        lastName:
+          type: string
+
+        roles:
+          type: array
+          items:
+            type: string
+          example:
+            - user
+
+        createdAt:
+          type: string
+          format: date-time
+
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true

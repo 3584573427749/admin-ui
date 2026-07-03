@@ -30,6 +30,11 @@ export const router = createRouter({
                     component: HomeView
                 },
                 {
+                    path: 'anvandare',
+                    name: 'users',
+                    component: () => import('../views/UsersView.vue')
+                },
+                {
                     path: 'about',
                     name: 'about',
                     component: AboutView
