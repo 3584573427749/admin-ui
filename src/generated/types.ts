@@ -63,6 +63,19 @@ export interface components {
             /** @example Name */
             lastName: string;
         };
+        UpdateUserRequest: {
+            /** Format: uuid */
+            id: string;
+            /** Format: email */
+            email: string;
+            firstName: string;
+            lastName: string;
+            isActive: boolean;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt?: string | null;
+        };
         User: {
             /** Format: uuid */
             id: string;
@@ -230,7 +243,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateUserRequest"];
+                "application/json": components["schemas"]["UpdateUserRequest"];
             };
         };
         responses: {

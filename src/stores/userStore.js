@@ -17,7 +17,7 @@ function newUser() {
     };
 }
 
-export const useUsersStore = defineStore('usersStore', () => {
+export const useUserStore = defineStore('usersStore', () => {
     const notificationStore = useNotificationStore();
     const users = ref([]);
     const selectedUser = ref(newUser());
@@ -65,7 +65,7 @@ export const useUsersStore = defineStore('usersStore', () => {
                     email: user.email,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    isActive: 'true',
+                    isActive: true,
                     createdAt: user.createdAt,
                     updatedAt: user.updatedAt
                 });

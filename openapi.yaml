@@ -167,7 +167,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUserRequest'
+              $ref: '#/components/schemas/UpdateUserRequest'
       responses:
         '200':
           description: OK
@@ -298,6 +298,43 @@ components:
           type: string
           minLength: 2
           example: Name
+
+    UpdateUserRequest:
+      type: object
+      required:
+        - id
+        - email
+        - firstName
+        - lastName
+        - isActive
+        - createdAt
+
+      properties:
+        id:
+          type: string
+          format: uuid
+
+        email:
+          type: string
+          format: email
+
+        firstName:
+          type: string
+
+        lastName:
+          type: string
+
+        isActive:
+          type: boolean
+
+        createdAt:
+          type: string
+          format: date-time
+
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
 
     User:
       type: object

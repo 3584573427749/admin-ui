@@ -1,16 +1,16 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { useUsersStore } from '@/stores/userStore.js';
+import { useUserStore } from '@/stores/userStore.js';
 import { storeToRefs } from 'pinia';
 
-const usersStore = useUsersStore();
-const { users, selectedUser, loading } = storeToRefs(usersStore);
+const userStore = useUserStore();
+const { users, selectedUser, loading } = storeToRefs(userStore);
 const availableRoles = ['Verksamhetsledare', 'Ledare', 'Styrelse', 'Domare'];
 
 const activeTab = ref('info');
 
 onMounted(async () => {
-    await usersStore.loadUsers();
+    await userStore.loadUsers();
 });
 
 function isRoleSelected(role) {
@@ -46,7 +46,7 @@ function toggleRole(role) {
                             'ui-selected': user.id === selectedUser?.id
                         }
                     ]"
-                    @click="usersStore.selectUser(user)"
+                    @click="userStore.selectUser(user)"
                 />
             </v-list>
         </div>
@@ -82,20 +82,20 @@ function toggleRole(role) {
                                 </div>
 
                                 <div class="button-row">
-                                    <v-btn color="primary" @click="usersStore.saveUser">
+                                    <v-btn color="primary" @click="userStore.saveUser">
                                         Spara
                                     </v-btn>
                                     <v-btn
                                         color="error"
                                         variant="outlined"
-                                        @click="usersStore.deleteSelectedUser"
+                                        @click="userStore.deleteSelectedUser"
                                     >
                                         Radera
                                     </v-btn>
                                     <v-btn
                                         color="success"
                                         variant="outlined"
-                                        @click="usersStore.createNewUser"
+                                        @click="userStore.createNewUser"
                                     >
                                         Ny
                                     </v-btn>

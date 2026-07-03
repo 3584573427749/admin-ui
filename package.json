@@ -11,7 +11,8 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "postinstall": "mkdir -p .ci && touch .ci/frontend .ci/dockerdeploy",
-        "generate-types": "openapi-typescript openapi.yaml -o src/generated/types.ts"
+        "generate-types": "openapi-typescript openapi.yaml -o src/generated/types.ts",
+        "test": "vitest"
     },
     "dependencies": {
         "@mdi/font": "^7.4.47",
@@ -22,10 +23,14 @@
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^6.0.7",
+        "@vue/test-utils": "^2.4.11",
         "eslint": "^8.56.0",
+        "jsdom": "^29.1.1",
+        "openapi-typescript": "^7.13.0",
+        "playwright": "^1.61.1",
         "prettier": "^3.2.5",
         "vite": "^8.1.0",
-        "openapi-typescript": "^7.13.0"
+        "vitest": "^4.1.9"
     },
     "allowScripts": {
         "vue-demi@0.14.10": true
