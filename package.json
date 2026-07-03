@@ -10,7 +10,6 @@
         "lint": "eslint src",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "postinstall": "mkdir -p .ci && touch .ci/frontend .ci/dockerdeploy",
         "generate-types": "openapi-typescript openapi.yaml -o src/generated/types.ts",
         "test:unit": "vitest run",
         "test:e2e": "playwright test",
