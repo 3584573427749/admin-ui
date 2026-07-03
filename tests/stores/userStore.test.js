@@ -3,7 +3,12 @@ import { createPinia, setActivePinia } from 'pinia';
 import { useUserStore } from '@/stores/userStore';
 import * as userService from '@/services/userService';
 import { useNotificationStore } from '@/stores/notificationStore';
+import {USER, USERS} from "../fixtures/user.js"
+import {VALIDATION_ERROR, USER_NOT_FOUND_ERROR, USER_EXISTS_ERROR} from "../fixtures/error.js"
+import {UPDATE_USER_REQUEST, CREATE_USER_REQUEST} from "../fixtures/request.js"
+
 const mockSuccess = vi.fn();
+const mockError = vi.fn();
 
 vi.mock('@/services/userService', () => ({
     getUsers: vi.fn(),
@@ -16,37 +21,11 @@ vi.mock('@/services/userService', () => ({
 vi.mock('@/stores/notificationStore', () => ({
     useNotificationStore: () => ({
         success: mockSuccess,
-        error: vi.fn()
+        error: mockError
     })
 }));
-const USER = {
-    id: '019ea89c-e194-71b3-b05a-1fd8b0769ec1',
-    email: 'anna@example.com',
-    firstName: 'Anna',
-    lastName: 'Andersson',
-    roles: ['user'],
-    updatedAt: null,
-    createdAt: '2026-07-03T10:30:00+00:00'
-};
-const USERS = [
-    USER,
-    {
-        ...USER,
-        id: '019ea89c-e194-71b3-b05a-1fd8b0769ec2',
-        email: 'kalle@example.com',
-        firstName: 'Kalle',
-        lastName: 'Kula'
-    }
-];
-const UPDATE_USER_REQUEST = {
-    id: USER.id,
-    email: USER.email,
-    firstName: USER.firstName,
-    lastName: USER.lastName,
-    isActive: true,
-    createdAt: USER.createdAt,
-    updatedAt: USER.updatedAt
-};
+
+
 describe('userStore', () => {
     beforeEach(() => {
         setActivePinia(createPinia());
@@ -100,7 +79,7 @@ describe('userStore', () => {
         userService.getUsers.mockResolvedValue(USERS);
         await store.loadUsers();
 
-        expect(store.selectedUser.id).toBe('019ea89c-e194-71b3-b05a-1fd8b0769ec1');
+        expect(store.selectedUser.id).toBe(USER.id);
     });
 
     it('creates a new user', async () => {
@@ -156,5 +135,52 @@ describe('userStore', () => {
         await store.deleteSelectedUser();
 
         expect(userService.deleteUser).not.toHaveBeenCalled();
+    });
+
+    it('shows an error toast when createUser fails', async () => {
+        const store = useUserStore();
+
+        store.createNewUser();
+        store.selectedUser.email = USER.email;
+        store.selectedUser.firstName = USER.firstName;
+        store.selectedUser.lastName = USER.lastName;
+        userService.createUser.mockRejectedValue(USER_EXISTS_ERROR);
+
+        await expect(store.saveUser()).rejects.toEqual(USER_EXISTS_ERROR);
+        expect(mockError).toHaveBeenCalledWith(USER_EXISTS_ERROR);
+        expect(mockSuccess).not.toHaveBeenCalled();
+    });
+
+    it('shows an error toast when updateUser fails', async () => {
+        const store = useUserStore();
+
+        store.selectUser(USER);
+        userService.updateUser.mockRejectedValue(USER_NOT_FOUND_ERROR);
+
+        await expect(store.saveUser()).rejects.toEqual(USER_NOT_FOUND_ERROR);
+        expect(mockError).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR);
+    });
+
+    it('shows an error toast when deleteUser fails', async () => {
+        const store = useUserStore();
+
+        store.selectUser(USER);
+        userService.deleteUser.mockRejectedValue(USER_NOT_FOUND_ERROR);
+
+        await expect(store.deleteSelectedUser()).rejects.toEqual(USER_NOT_FOUND_ERROR);
+        expect(mockError).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR);
+    });
+
+    it('passes validation errors to notificationStore', async () => {
+        const store = useUserStore();
+
+        store.createNewUser();
+        store.selectedUser.email = USER.email;
+        store.selectedUser.firstName = USER.firstName;
+        store.selectedUser.lastName = USER.lastName;
+        userService.createUser.mockRejectedValue(VALIDATION_ERROR);
+
+        await expect(store.saveUser()).rejects.toEqual(VALIDATION_ERROR);
+        expect(mockError).toHaveBeenCalledWith(VALIDATION_ERROR);
     });
 });

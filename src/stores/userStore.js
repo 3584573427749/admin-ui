@@ -82,6 +82,8 @@ export const useUserStore = defineStore('usersStore', () => {
             await loadUsers();
         } catch (error) {
             notificationStore.error(error);
+
+            throw error;
         }
     }
 
@@ -101,6 +103,9 @@ export const useUserStore = defineStore('usersStore', () => {
             createNewUser();
         } catch (error) {
             notificationStore.error(error);
+
+
+            throw error;
         }
     }
 
