@@ -1,201 +1,204 @@
-# Vue Web UI Template
+# Admin UI
 
-En mall för att snabbt skapa administrativa webbgränssnitt med Vue 3.
+Administrationsgränssnitt för Simning.ax.
 
-Mallen innehåller en färdig grundstruktur för:
+Admin UI används för administration av användare, roller och andra funktioner i systemet via Auth Service och övriga backendtjänster.
 
-* autentisering
-* routing
-* applikationslayout
-* navigering
-* tema-hantering
-* API-kommunikation
-* Docker-distribution
+## Teknikstack
 
-Syftet är att ge en konsekvent startpunkt för alla webbgränssnitt inom plattformen.
+- Vue 3
+- Pinia
+- Vue Router
+- Vuetify
+- Vite
+- OpenAPI
+- Vitest
+- Playwright
+- Docker
+- Nginx
 
-***
+## Komma igång
 
-## Innehåll
+### Förutsättningar
 
-* Vue 3
-* Vite
-* Pinia
-* Vue Router
-* Vuetify 3
-* Responsiv navigering (desktop och touch)
-* Ljust/mörkt tema baserat på webbläsarens inställningar
-* AppLayout med:
-    * Header
-    * Navigering
-    * Main Content
-    * Footer
-* Auth Store
-* API Service
-* Route Guards
-* VERSION-fil
-* Docker-image (Nginx)
-* ESLint
-* Prettier
+- Node.js 24
+- npm
 
-***
-
-## Projektstruktur
-
-```text
-src
-├── assets
-│   ├── base.css
-│   └── main.css
-│
-├── components
-│   └── NavBar.vue
-│
-├── layouts
-│   ├── AppHeader.vue
-│   ├── AppFooter.vue
-│   └── AppLayout.vue
-│
-├── router
-│   ├── index.js
-│   └── guard.js
-│
-├── services
-│   ├── apiService.js
-│   └── appVersion.js
-│
-├── stores
-│   └── auth.js
-│
-├── views
-│   ├── HomeView.vue
-│   ├── LoginView.vue
-│   └── 404View.vue
-│
-└── App.vue
-```
-
-***
-
-## Routing
-
-Mallen innehåller stöd för:
-
-* publik inloggningssida
-* skyddade rutter
-* 404-hantering
-
-Exempel:
-
-```text
-/login
-/
-/about
-/jibberish
-```
-
-Alla applikationsrutter är avsedda att skyddas av auth-guard.
-
-***
-
-## Teman
-
-Mallen stödjer:
-
-* Light Theme
-* Dark Theme
-
-Tema väljs automatiskt utifrån användarens operativsystem/webbläsare via:
-
-```css
-prefers-color-scheme
-```
-
-Färgvariabler definieras i:
-
-```text
-src/assets/base.css
-```
-
-***
-
-## Utveckling
-
-Installera beroenden:
+### Installera beroenden
 
 ```bash
 npm install
 ```
 
-Starta utvecklingsserver:
+### Starta utvecklingsserver
 
 ```bash
 npm run dev
 ```
 
-Standardadress:
+Applikationen startar normalt på:
 
 ```text
 http://localhost:5173
 ```
 
-***
+## OpenAPI och typer
 
-## Bygg
+Frontendens modeller genereras från OpenAPI-specifikationen.
 
-Skapa produktionsbuild:
-
-```bash
-npm run build
-```
-
-Förhandsgranska build:
+Generera typer:
 
 ```bash
-npm run preview
+npm run generate-types
 ```
 
-***
+Typerna skapas i:
+
+```text
+src/generated/types.ts
+```
+
+`openapi.yaml` är den primära källan för API-kontraktet.
+
+## Tester
+
+### Enhetstester och komponenttester
+
+```bash
+npm run test:unit
+```
+
+### End-to-end-tester
+
+```bash
+npm run test:e2e
+```
+
+### Samtliga tester
+
+```bash
+npm test
+```
+
+## Kodkvalitet
+
+### ESLint
+
+```bash
+npm run lint
+```
+
+### Prettier
+
+Formatera kod:
+
+```bash
+npm run format
+```
+
+Kontrollera formatering:
+
+```bash
+npm run format:check
+```
 
 ## Docker
 
-Bygg image:
+### Bygg image
 
 ```bash
-docker build -t web-ui .
+docker build -t admin-ui .
 ```
 
-Kör lokalt:
+### Starta container
 
 ```bash
-docker run -p 8080:80 web-ui
+docker run -p 8080:80 admin-ui
 ```
 
-***
-
-## Versionshantering
-
-Applikationsversion hämtas från filen:
+Applikationen blir tillgänglig via:
 
 ```text
-VERSION
+http://localhost:8080
 ```
 
-Versionen exponeras i användargränssnittet via:
+## Arkitektur
+
+### State Management
+
+Tillstånd hanteras med Pinia.
+
+Exempel på stores:
+
+```text
+notificationStore
+userStore
+```
+
+### Notifieringar
+
+Applikationen använder ett centralt toast-system.
+
+Exempel:
 
 ```js
-APP_VERSION
+notifications.success('Användaren har skapats.');
+notifications.error(error);
 ```
 
-***
+OpenAPI-fel översätts automatiskt till användarvänliga meddelanden i `notificationStore`.
 
-## Anpassning
+### API-kommunikation
 
-Efter att ett nytt projekt skapats från mallen bör minst följande uppdateras:
+```text
+openapi.yaml
+        ↓
+generated/types.ts
+        ↓
+userService
+        ↓
+userStore
+        ↓
+Vue-komponenter
+```
 
-* Projektnamn
-* Menystruktur
-* API-endpoints
-* Auth-flöde
-* Färgtema
-* Docker-image-namn
+## CI/CD
+
+### CI
+
+Pull requests valideras genom:
+
+- OpenAPI-validering
+- ESLint
+- Enhets- och komponenttester
+- Produktionsbyggning
+
+### Release
+
+Releaser skapas genom att pusha en versionsetikett:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Release-pipelinen bygger och publicerar Docker-imagen.
+
+## Projektstruktur
+
+```text
+src/
+├── api/
+├── components/
+├── generated/
+├── router/
+├── services/
+├── stores/
+├── views/
+
+tests/
+├── components/
+├── e2e/
+├── fixtures/
+└── stores/
+```
