@@ -27,3 +27,9 @@ export async function updateRole(id, role) {
 export async function deleteRole(id) {
     await api.delete(`/roles/${id}`);
 }
+
+export async function getRoleUsers(id) {
+    const response = await api.get(`/roles/${id}/users`);
+
+    return response.data;
+}

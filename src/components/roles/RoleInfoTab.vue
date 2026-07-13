@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoleStore } from '@/stores/roleStore.js';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
@@ -7,7 +7,8 @@ import ConfirmDialog from '@/components/ConfirmDialog.vue';
 const roleStore = useRoleStore();
 const showDeleteDialog = ref(false);
 
-const { selectedRole } = storeToRefs(roleStore);
+const { selectedRole, roleUsers } = storeToRefs(roleStore);
+const userCount = computed(() => roleUsers.value.length);
 
 function removeUser() {
     roleStore.deleteSelectedRole();
@@ -36,11 +37,11 @@ function removeUser() {
             min="0"
             step="10"
         />
-
+        <p>Antal användare: {{ userCount }}</p>
         <div class="button-row">
             <v-btn color="primary" @click="roleStore.saveRole"> Spara </v-btn>
 
-            <v-btn color="error" variant="outlined" @click="showDeleteDialog = true" >
+            <v-btn color="error" variant="outlined" @click="showDeleteDialog = true">
                 Radera
             </v-btn>
 

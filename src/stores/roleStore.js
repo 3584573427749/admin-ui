@@ -21,13 +21,14 @@ export const useRoleStore = defineStore('roleStore', () => {
 
     const roles = ref([]);
     const selectedRole = ref(newRole());
-
     const loading = ref(false);
+    const roleUsers = ref([]);
 
-    function selectRole(role) {
+    async function selectRole(role) {
         selectedRole.value = structuredClone(toRaw(role));
-    }
 
+        await loadRoleUsers(role.id);
+    }
     function createNewRole() {
         selectedRole.value = newRole();
     }
@@ -112,9 +113,20 @@ export const useRoleStore = defineStore('roleStore', () => {
         }
     }
 
+    async function loadRoleUsers(roleId) {
+        loading.value = true;
+
+        try {
+            roleUsers.value = await roleService.getRoleUsers(roleId);
+        } finally {
+            loading.value = false;
+        }
+    }
+
     return {
         roles,
         selectedRole,
+        roleUsers,
         loading,
 
         selectRole,
@@ -122,6 +134,7 @@ export const useRoleStore = defineStore('roleStore', () => {
 
         loadRoles,
         loadRole,
+        loadRoleUsers,
 
         saveRole,
         deleteSelectedRole
