@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoleStore } from '@/stores/roleStore.js';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
+import router from '@/router/index.js';
 
 const roleStore = useRoleStore();
 const showDeleteDialog = ref(false);
@@ -10,8 +11,19 @@ const showDeleteDialog = ref(false);
 const { selectedRole, roleUsers } = storeToRefs(roleStore);
 const userCount = computed(() => roleUsers.value.length);
 
-function removeUser() {
-    roleStore.deleteSelectedRole();
+async function removeUser() {
+    const id = await roleStore.deleteSelectedRole();
+
+    if (id) {
+        await router.push(`/roller/${id}`);
+    } else {
+        await router.push('/roller');
+    }
+}
+
+async function saveRole() {
+    await roleStore.saveRole();
+    await router.push(`/roller/${selectedRole.value.id}`);
 }
 </script>
 
@@ -39,7 +51,7 @@ function removeUser() {
         />
         <p>Antal användare: {{ userCount }}</p>
         <div class="button-row">
-            <v-btn color="primary" @click="roleStore.saveRole"> Spara </v-btn>
+            <v-btn color="primary" @click="saveRole"> Spara </v-btn>
 
             <v-btn color="error" variant="outlined" @click="showDeleteDialog = true">
                 Radera

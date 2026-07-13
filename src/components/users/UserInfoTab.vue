@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 import { useUserStore } from '@/stores/userStore.js';
 import { storeToRefs } from 'pinia';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
+import router from '@/router/index.js';
 
 const userStore = useUserStore();
 const roleStore = useRoleStore();
@@ -31,8 +32,20 @@ function toggleRole(roleId) {
         roles.push(roleId);
     }
 }
-function removeUser() {
-    userStore.deleteSelectedUser();
+async function removeUser() {
+    const id = await userStore.deleteSelectedUser();
+
+    if (id) {
+        await router.push(`/anvandare/${id}`);
+    } else {
+        await router.push('/anvandare');
+    }
+}
+
+async function saveUser() {
+    await userStore.saveUser();
+
+    router.push(`/anvandare/${selectedUser.value.id}`);
 }
 </script>
 <template>
@@ -55,12 +68,13 @@ function removeUser() {
                     :key="role.id"
                     :label="role.name"
                     :model-value="isRoleSelected(role.id)"
+                    density="compact"
                     @update:model-value="toggleRole(role.id)"
                 />
             </div>
 
             <div class="button-row">
-                <v-btn color="primary" @click="userStore.saveUser"> Spara </v-btn>
+                <v-btn color="primary" @click="saveUser"> Spara </v-btn>
                 <v-btn color="error" variant="outlined" @click="showDeleteDialog = true">
                     Radera
                 </v-btn>
@@ -93,5 +107,8 @@ function removeUser() {
     gap: 1rem;
 
     margin-top: 2rem;
+}
+.role-panel :deep(.v-checkbox) {
+    --v-input-control-height: 28px;
 }
 </style>

@@ -32,7 +32,10 @@ async function removeUser() {
     />
 
     <div class="role-users-tab">
-        <ul class="list">
+        <div v-if="roleUsers.length === 0" class="role-users-tab__empty muted">
+            Denna roll har inga användare.
+        </div>
+        <ul v-else class="list">
             <li v-for="user in roleUsers" :key="user.id" class="list-item role-users-tab__row">
                 <div>
                     <router-link :to="`/anvandare/${user.id}`" class="link-reset">
@@ -58,5 +61,9 @@ async function removeUser() {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.role-users-tab__empty {
+    padding: 1rem;
+    text-align: center;
 }
 </style>

@@ -107,7 +107,13 @@ export const useRoleStore = defineStore('roleStore', () => {
 
             await loadRoles();
 
-            createNewRole();
+            if (roles.value.length > 0) {
+                await selectRole(roles.value[0]);
+            } else {
+                createNewRole();
+            }
+
+            return selectedRole.value.id;
         } catch (error) {
             notificationStore.error(error);
 
