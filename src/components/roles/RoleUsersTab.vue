@@ -6,19 +6,27 @@ import ConfirmDialog from '@/components/ConfirmDialog.vue';
 
 const roleStore = useRoleStore();
 const showDeleteDialog = ref(false);
+const selectedUser = ref(null);
 
 const { selectedRole, roleUsers } = storeToRefs(roleStore);
+function askRemoveUser(user) {
+    selectedUser.value = user;
+    showDeleteDialog.value = true;
+}
+async function removeUser() {
+    if (!selectedUser.value) {
+        return;
+    }
 
-function removeUser() {
-    roleStore.deleteSelectedRole();
+    await roleStore.removeUserFromRole(selectedUser.value.id);
 }
 </script>
 
 <template>
     <ConfirmDialog
         v-model="showDeleteDialog"
-        title="Ta bort roll"
-        text="Vill du verkligen ta bort rollen?"
+        title="Ta bort användare från roll"
+        :text="`Vill du verkligen ta bort ${selectedUser?.firstName ?? ''} ${selectedUser?.lastName ?? ''} från rollen?`"
         confirm-text="Ta bort"
         @confirm="removeUser"
     />
@@ -34,7 +42,12 @@ function removeUser() {
                     <span class="muted"> ({{ user.email }}) </span>
                 </div>
 
-                <v-btn icon="mdi-delete" variant="text" color="error" />
+                <v-btn
+                    icon="mdi-delete"
+                    variant="text"
+                    color="error"
+                    @click="askRemoveUser(user)"
+                />
             </li>
         </ul>
     </div>

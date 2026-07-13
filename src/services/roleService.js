@@ -33,3 +33,7 @@ export async function getRoleUsers(id) {
 
     return response.data;
 }
+
+export async function removeRoleUser(roleId, userId) {
+    await api.delete(`/users/${userId}/roles/${roleId}`);
+}

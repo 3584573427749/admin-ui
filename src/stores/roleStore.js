@@ -122,7 +122,23 @@ export const useRoleStore = defineStore('roleStore', () => {
             loading.value = false;
         }
     }
+    async function removeUserFromRole(userId) {
+        if (!selectedRole.value.id) {
+            return;
+        }
 
+        try {
+            await roleService.removeRoleUser(selectedRole.value.id, userId);
+
+            notificationStore.success('Användaren togs bort från rollen.');
+
+            await loadRoleUsers(selectedRole.value.id);
+        } catch (error) {
+            notificationStore.error(error);
+
+            throw error;
+        }
+    }
     return {
         roles,
         selectedRole,
@@ -137,6 +153,7 @@ export const useRoleStore = defineStore('roleStore', () => {
         loadRoleUsers,
 
         saveRole,
-        deleteSelectedRole
+        deleteSelectedRole,
+        removeUserFromRole
     };
 });
