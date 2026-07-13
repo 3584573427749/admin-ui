@@ -1,9 +1,12 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-import { useUserStore } from '@/stores/userStore.js';
+import { onMounted, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useRouter, useRoute } from 'vue-router';
+import { useUserStore } from '@/stores/userStore.js';
 import UserInfoTab from '@/components/users/UserInfoTab.vue';
 
+const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
 const { users, selectedUser, loading } = storeToRefs(userStore);
 
@@ -11,8 +14,23 @@ const activeTab = ref('info');
 
 onMounted(async () => {
     await userStore.loadUsers();
+
+    if (!route.params.id && users.value.length > 0) {
+        router.replace(`/anvandare/${users.value[0].id}`);
+    }
 });
 
+watch(
+    () => route.params.id,
+    async (id) => {
+        if (!id) {
+            return;
+        }
+
+        await userStore.loadUser(id);
+    },
+    { immediate: true }
+);
 </script>
 
 <template>
@@ -31,7 +49,7 @@ onMounted(async () => {
                             'ui-selected': user.id === selectedUser?.id
                         }
                     ]"
-                    @click="userStore.selectUser(user)"
+                    @click="router.push(`/anvandare/${user.id}`)"
                 />
             </v-list>
         </div>
@@ -78,6 +96,4 @@ onMounted(async () => {
 .users-view__editor {
     min-width: 0;
 }
-
-
 </style>

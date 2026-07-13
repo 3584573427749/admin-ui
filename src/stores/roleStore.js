@@ -59,6 +59,8 @@ export const useRoleStore = defineStore('roleStore', () => {
 
         try {
             selectedRole.value = await roleService.getRole(id);
+
+            await loadRoleUsers(id);
         } finally {
             loading.value = false;
         }
