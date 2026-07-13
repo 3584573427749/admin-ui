@@ -1,15 +1,16 @@
 <script setup>
 import { useRoleStore } from '@/stores/roleStore';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useUserStore } from '@/stores/userStore.js';
 import { storeToRefs } from 'pinia';
+import ConfirmDialog from '@/components/ConfirmDialog.vue';
 
 const userStore = useUserStore();
-const { selectedUser } = storeToRefs(userStore);
-
 const roleStore = useRoleStore();
 
+const { selectedUser } = storeToRefs(userStore);
 const { roles } = storeToRefs(roleStore);
+const showDeleteDialog = ref(false);
 
 onMounted(async () => {
     await roleStore.loadRoles();
@@ -30,8 +31,18 @@ function toggleRole(roleId) {
         roles.push(roleId);
     }
 }
+function removeUser() {
+    userStore.deleteSelectedUser();
+}
 </script>
 <template>
+    <ConfirmDialog
+        v-model="showDeleteDialog"
+        title="Ta bort användare"
+        text="Vill du verkligen ta bort användaren?"
+        confirm-text="Ta bort"
+        @confirm="removeUser"
+    />
     <v-window-item value="info">
         <div class="user-form" density="compact">
             <v-text-field v-model="selectedUser.firstName" label="Förnamn" />
@@ -50,7 +61,7 @@ function toggleRole(roleId) {
 
             <div class="button-row">
                 <v-btn color="primary" @click="userStore.saveUser"> Spara </v-btn>
-                <v-btn color="error" variant="outlined" @click="userStore.deleteSelectedUser">
+                <v-btn color="error" variant="outlined" @click="showDeleteDialog = true">
                     Radera
                 </v-btn>
                 <v-btn color="success" variant="outlined" @click="userStore.createNewUser">

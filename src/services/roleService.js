@@ -6,3 +6,24 @@ export async function getRoles() {
     return response.data;
 }
 
+export async function getRole(id) {
+    const response = await api.get(`/roles/${id}`);
+
+    return response.data;
+}
+
+export async function createRole(role) {
+    const response = await api.post('/roles', role);
+
+    return response.data;
+}
+
+export async function updateRole(id, role) {
+    const response = await api.put(`/roles/${id}`, role);
+
+    return response.data;
+}
+
+export async function deleteRole(id) {
+    await api.delete(`/roles/${id}`);
+}
