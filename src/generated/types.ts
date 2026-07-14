@@ -41,6 +41,112 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/users/{id}/permanent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Permanently delete user */
+        delete: operations["permanentlyDeleteUser"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all roles */
+        get: operations["getAllRoles"];
+        put?: never;
+        /** Create role */
+        post: operations["createRole"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/roles/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get role by id */
+        get: operations["getRole"];
+        /** Update role */
+        put: operations["updateRole"];
+        post?: never;
+        /** Delete role */
+        delete: operations["deleteRole"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{id}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get roles for user */
+        get: operations["getUserRoles"];
+        put?: never;
+        /** Add role to user */
+        post: operations["addRoleToUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{id}/roles/{roleId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove role from user */
+        delete: operations["removeRoleFromUser"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/roles/{id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get users with role */
+        get: operations["getUsersWithRole"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -62,19 +168,59 @@ export interface components {
             firstName: string;
             /** @example Name */
             lastName: string;
+            /**
+             * @example [
+             *       "12345678-1234-1234-1234-1234567890ab"
+             *     ]
+             */
+            roles: string[];
         };
         UpdateUserRequest: {
             /** Format: uuid */
             id: string;
-            /** Format: email */
+            /**
+             * Format: email
+             * @example test@example.com
+             */
             email: string;
+            /** @example User */
             firstName: string;
+            /** @example Name */
             lastName: string;
-            isActive: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string | null;
+            /** Format: date-time */
+            deletedAt?: string | null;
+            /**
+             * @example [
+             *       "12345678-1234-1234-1234-1234567890ab"
+             *     ]
+             */
+            roles: string[];
+        };
+        CreateRoleRequest: {
+            /** @example test */
+            name: string;
+            /** @example test */
+            description: string;
+            /** @example 100 */
+            adminLevel: number;
+        };
+        UpdateRoleRequest: {
+            /** Format: uuid */
+            id: string;
+            /** @example test */
+            name: string;
+            /** @example test */
+            description: string;
+            /** @example 100 */
+            adminLevel: number;
             /** Format: date-time */
             createdAt: string;
             /** Format: date-time */
-            updatedAt?: string | null;
+            updatedAt: string | null;
         };
         User: {
             /** Format: uuid */
@@ -85,10 +231,26 @@ export interface components {
             lastName: string;
             /**
              * @example [
-             *       "user"
+             *       "12345678-1234-1234-1234-1234567890ab"
              *     ]
              */
             roles: string[];
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string | null;
+            /** Format: date-time */
+            deletedAt: string | null;
+        };
+        Role: {
+            /** Format: uuid */
+            id: string;
+            /** @example Test */
+            name: string;
+            /** @example Test */
+            description: string;
+            /** @example 100 */
+            adminLevel: number;
             /** Format: date-time */
             createdAt: string;
             /** Format: date-time */
@@ -320,6 +482,486 @@ export interface operations {
                 content?: never;
             };
             /** @description User not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    permanentlyDeleteUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User permanently deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description User not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getAllRoles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["Role"][];
+                    };
+                };
+            };
+        };
+    };
+    createRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRoleRequest"];
+            };
+        };
+        responses: {
+            /** @description Role created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 201 */
+                        statusCode: number;
+                        data: components["schemas"]["Role"];
+                    };
+                };
+            };
+            /** @description Role already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 409 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 422 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["Role"];
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Role not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    updateRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateRoleRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["Role"];
+                    };
+                };
+            };
+            /** @description Role not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Role exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 409 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 422 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    deleteRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Role deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Role not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getUserRoles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["Role"][];
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description User not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    addRoleToUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    roleId: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Role added to user */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description User or role not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description User already has role */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 409 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    removeRoleFromUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                roleId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Role removed from user */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description User or role not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getUsersWithRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["User"][];
+                    };
+                };
+            };
+            /** @description Role not found */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Role not found */
             404: {
                 headers: {
                     [name: string]: unknown;
