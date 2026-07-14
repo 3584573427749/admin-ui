@@ -3,7 +3,7 @@ export const USER = {
     email: 'anna@example.com',
     firstName: 'Anna',
     lastName: 'Andersson',
-    roles: ['user'],
+    roles: ['12345678-1234-1234-1234-1234567890ab'],
     updatedAt: null,
     createdAt: '2026-07-03T10:30:00+00:00'
 };

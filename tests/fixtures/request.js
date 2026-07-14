@@ -11,7 +11,7 @@ export const UPDATE_USER_REQUEST = {
     email: USER.email,
     firstName: USER.firstName,
     lastName: USER.lastName,
-    isActive: true,
+    roles: USER.roles,
     createdAt: USER.createdAt,
     updatedAt: USER.updatedAt
 };
