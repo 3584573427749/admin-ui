@@ -1,8 +1,35 @@
+````md
 # Admin UI
 
 Administrationsgränssnitt för Simning.ax.
 
 Admin UI används för administration av användare, roller och andra funktioner i systemet via Auth Service och övriga backendtjänster.
+
+## Funktionalitet
+
+### Användare
+
+- Skapa användare
+- Redigera användare
+- Ta bort användare
+- Visa användare
+- Tilldela roller
+- Ta bort roller från användare
+
+### Roller
+
+- Skapa roll
+- Redigera roll
+- Ta bort roll
+- Visa användare med vald roll
+- Ta bort användare från roll
+
+### Navigation
+
+- Deep linking för användare
+- Deep linking för roller
+- Bokmärkningsbara URL:er
+- Återställning av vald användare eller roll efter omladdning
 
 ## Teknikstack
 
@@ -28,7 +55,7 @@ Admin UI används för administration av användare, roller och andra funktioner
 
 ```bash
 npm install
-```
+````
 
 ### Starta utvecklingsserver
 
@@ -80,6 +107,29 @@ npm run test:e2e
 npm test
 ```
 
+### Testområden
+
+Applikationen innehåller tester för:
+
+* Stores
+* Services
+* Vue-komponenter
+* Dialoger
+* Routing-relaterad logik
+
+Exempel:
+
+```text
+userStore
+roleStore
+userService
+roleService
+ConfirmDialog
+UserInfoTab
+RoleInfoTab
+RoleUsersTab
+```
+
 ## Kodkvalitet
 
 ### ESLint
@@ -128,11 +178,12 @@ http://localhost:8080
 
 Tillstånd hanteras med Pinia.
 
-Exempel på stores:
+Stores:
 
 ```text
 notificationStore
 userStore
+roleStore
 ```
 
 ### Notifieringar
@@ -155,11 +206,54 @@ openapi.yaml
         ↓
 generated/types.ts
         ↓
-userService
+Services
+(userService, roleService)
         ↓
-userStore
+Stores
+(userStore, roleStore)
         ↓
 Vue-komponenter
+```
+
+### Routing
+
+Vue Router används för navigation och deep linking.
+
+Följande URL:er stöds:
+
+```text
+/
+/anvandare
+/anvandare/{id}
+
+/roller
+/roller/{id}
+
+/anvandare/raderade
+```
+
+Vald användare eller roll kan nås direkt via URL och återställs vid omladdning av sidan.
+
+### Komponentstruktur
+
+Användar- och rollhantering är uppdelad i separata vyer och komponenter.
+
+Exempel:
+
+```text
+UsersView
+├── UserInfoTab
+
+RolesView
+├── RoleInfoTab
+└── RoleUsersTab
+```
+
+Gemensamma komponenter:
+
+```text
+ConfirmDialog
+ToastItem
 ```
 
 ## CI/CD
@@ -168,10 +262,10 @@ Vue-komponenter
 
 Pull requests valideras genom:
 
-- OpenAPI-validering
-- ESLint
-- Enhets- och komponenttester
-- Produktionsbyggning
+* OpenAPI-validering
+* ESLint
+* Enhets- och komponenttester
+* Produktionsbyggning
 
 ### Release
 
@@ -188,17 +282,33 @@ Release-pipelinen bygger och publicerar Docker-imagen.
 
 ```text
 src/
-├── api/
+├── assets/
 ├── components/
+│   ├── roles/
+│   ├── users/
+│   ├── ConfirmDialog.vue
+│   └── ToastItem.vue
 ├── generated/
+├── layouts/
 ├── router/
 ├── services/
+│   ├── apiService.js
+│   ├── userService.js
+│   └── roleService.js
 ├── stores/
+│   ├── notificationStore.js
+│   ├── userStore.js
+│   └── roleStore.js
 ├── views/
+│   ├── HomeView.vue
+│   ├── UsersView.vue
+│   ├── RolesView.vue
+│   └── DeletedUsersView.vue
 
 tests/
 ├── components/
 ├── e2e/
 ├── fixtures/
+├── services/
 └── stores/
 ```
