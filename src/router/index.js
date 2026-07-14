@@ -35,6 +35,26 @@ export const router = createRouter({
                     component: () => import('../views/UsersView.vue')
                 },
                 {
+                    path: 'anvandare/:id',
+                    name: 'user',
+                    component: () => import('../views/UsersView.vue')
+                },
+               {
+                    path: 'roller',
+                    name: 'roles',
+                    component: () => import('../views/RolesView.vue')
+                },
+               {
+                    path: 'roller/:id',
+                    name: 'role',
+                    component: () => import('../views/RolesView.vue')
+                },
+               {
+                    path: 'anvandare/raderade',
+                    name: 'deletedusers',
+                    component: () => import('../views/DeletedUsersView.vue')
+                },
+                {
                     path: 'about',
                     name: 'about',
                     component: AboutView

@@ -60,21 +60,14 @@ export const useUserStore = defineStore('usersStore', () => {
         const user = selectedUser.value;
         try {
             if (user.id) {
-                selectedUser.value = await userService.updateUser(user.id, {
-                    id: user.id,
-                    email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    isActive: true,
-                    createdAt: user.createdAt,
-                    updatedAt: user.updatedAt
-                });
+                selectedUser.value = await userService.updateUser(user.id, user);
                 notificationStore.success('Användaren uppdaterades.');
             } else {
                 selectedUser.value = await userService.createUser({
                     email: user.email,
                     firstName: user.firstName,
-                    lastName: user.lastName
+                    lastName: user.lastName,
+                    roles: user.roles
                 });
                 notificationStore.success('Användaren skapades.');
             }
@@ -99,11 +92,14 @@ export const useUserStore = defineStore('usersStore', () => {
             notificationStore.success('Användaren togs bort.');
 
             await loadUsers();
-
-            createNewUser();
+            if(users.value.length > 0){
+                selectUser(users.value[0]);
+            } else {
+                createNewUser();
+            }
+            return selectedUser.value.id;
         } catch (error) {
             notificationStore.error(error);
-
 
             throw error;
         }

@@ -12,8 +12,9 @@ const menuItems = [
         label: 'Användare',
         subItems: [
             { label: 'Användare', route: '/anvandare' },
-            { label: 'Roller', route: '/rolesView' },
-            { label: 'Rättigheter', route: '/permissionsView' }
+            { label: 'Roller', route: '/roller' },
+            { label: 'Rättigheter', route: '/permissionsView' },
+            { label: 'Raderade användare', route: '/anvandare/raderade' }
         ]
     },
     {

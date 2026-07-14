@@ -1,33 +1,36 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-import { useUserStore } from '@/stores/userStore.js';
+import { onMounted, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useRouter, useRoute } from 'vue-router';
+import { useUserStore } from '@/stores/userStore.js';
+import UserInfoTab from '@/components/users/UserInfoTab.vue';
 
+const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
 const { users, selectedUser, loading } = storeToRefs(userStore);
-const availableRoles = ['Verksamhetsledare', 'Ledare', 'Styrelse', 'Domare'];
 
 const activeTab = ref('info');
 
 onMounted(async () => {
     await userStore.loadUsers();
+
+    if (!route.params.id && users.value.length > 0) {
+        router.replace(`/anvandare/${users.value[0].id}`);
+    }
 });
 
-function isRoleSelected(role) {
-    return selectedUser.value.roles.includes(role);
-}
+watch(
+    () => route.params.id,
+    async (id) => {
+        if (!id) {
+            return;
+        }
 
-function toggleRole(role) {
-    const roles = selectedUser.value.roles;
-
-    const index = roles.indexOf(role);
-
-    if (index >= 0) {
-        roles.splice(index, 1);
-    } else {
-        roles.push(role);
-    }
-}
+        await userStore.loadUser(id);
+    },
+    { immediate: true }
+);
 </script>
 
 <template>
@@ -46,7 +49,7 @@ function toggleRole(role) {
                             'ui-selected': user.id === selectedUser?.id
                         }
                     ]"
-                    @click="userStore.selectUser(user)"
+                    @click="router.push(`/anvandare/${user.id}`)"
                 />
             </v-list>
         </div>
@@ -63,45 +66,7 @@ function toggleRole(role) {
 
                 <div class="tab-panel__content">
                     <v-window v-model="activeTab">
-                        <v-window-item value="info">
-                            <div class="user-form" density="compact">
-                                <v-text-field v-model="selectedUser.firstName" label="Förnamn" />
-                                <v-text-field v-model="selectedUser.lastName" label="Efternamn" />
-                                <v-text-field v-model="selectedUser.email" label="E-post" />
-                                <h4>Roller</h4>
-                                <div class="role-panel">
-                                    <v-checkbox
-                                        v-for="role in availableRoles"
-                                        :key="role"
-                                        :model-value="isRoleSelected(role)"
-                                        :label="role"
-                                        hide-details
-                                        density="compact"
-                                        @update:model-value="toggleRole(role)"
-                                    />
-                                </div>
-
-                                <div class="button-row">
-                                    <v-btn color="primary" @click="userStore.saveUser">
-                                        Spara
-                                    </v-btn>
-                                    <v-btn
-                                        color="error"
-                                        variant="outlined"
-                                        @click="userStore.deleteSelectedUser"
-                                    >
-                                        Radera
-                                    </v-btn>
-                                    <v-btn
-                                        color="success"
-                                        variant="outlined"
-                                        @click="userStore.createNewUser"
-                                    >
-                                        Ny
-                                    </v-btn>
-                                </div>
-                            </div>
-                        </v-window-item>
+                        <UserInfoTab />
 
                         <v-window-item value="groups">
                             <p>Grupphantering kommer i senare version.</p>
@@ -130,27 +95,5 @@ function toggleRole(role) {
 
 .users-view__editor {
     min-width: 0;
-}
-
-.user-form {
-    max-width: 600px;
-}
-
-.role-panel {
-    max-height: 200px;
-    overflow-y: auto;
-
-    padding: 0.5rem;
-
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-}
-
-.button-row {
-    display: flex;
-    gap: 1rem;
-
-    margin-top: 2rem;
 }
 </style>
