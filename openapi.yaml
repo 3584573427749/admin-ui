@@ -1,1007 +1,1006 @@
 openapi: 3.0.3
 info:
-  title: Admin-UI
-  version: 0.2.0
-  description: >-
-    Samlad OpenAPI-specifikation för Admin UI i simning.ax.
-    Specifikationen innehåller kontrakt för de backend-tjänster som
-    används av administrationsgränssnittet och används som underlag
-    för generering av TypeScript-interface.
+    title: Admin-UI
+    version: 0.2.0
+    description: >-
+        Samlad OpenAPI-specifikation för Admin UI i simning.ax.
+        Specifikationen innehåller kontrakt för de backend-tjänster som
+        används av administrationsgränssnittet och används som underlag
+        för generering av TypeScript-interface.
 
 paths:
-  /users:
-    post:
-      summary: Create user
-      operationId: createUser
-      tags:
-        - Users
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateUserRequest'
-      responses:
-        '201':
-          description: User created
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                  data:
-                    $ref: '#/components/schemas/User'
+    /users:
+        post:
+            summary: Create user
+            operationId: createUser
+            tags:
+                - Users
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateUserRequest'
+            responses:
+                '201':
+                    description: User created
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                    data:
+                                        $ref: '#/components/schemas/User'
 
-        '409':
-          description: User already exists
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 409
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '422':
-          description: Validation error
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 422
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-    get:
-      summary: Get all users
-      operationId: getAllUsers
-      tags:
-        - Users
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 200
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/User'
+                '409':
+                    description: User already exists
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 409
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '422':
+                    description: Validation error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 422
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+        get:
+            summary: Get all users
+            operationId: getAllUsers
+            tags:
+                - Users
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/User'
 
-  /users/{id}:
-    get:
-      summary: Get user by ID
-      operationId: getUserById
-      tags:
-        - Users
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 200
-                  data:
-                    $ref: '#/components/schemas/User'
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 400
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: User not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-    put:
-      summary: Update user
-      operationId: updateUser
-      tags:
-        - Users
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateUserRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 200
-                  data:
-                    $ref: '#/components/schemas/User'
+    /users/{id}:
+        get:
+            summary: Get user by ID
+            operationId: getUserById
+            tags:
+                - Users
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        $ref: '#/components/schemas/User'
+                '400':
+                    description: Bad request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 400
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: User not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+        put:
+            summary: Update user
+            operationId: updateUser
+            tags:
+                - Users
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateUserRequest'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        $ref: '#/components/schemas/User'
 
-        '404':
-          description: User not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '409':
-          description: User exists
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 409
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '422':
-          description: Validation error
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 422
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: User not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '409':
+                    description: User exists
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 409
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '422':
+                    description: Validation error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 422
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
 
-    delete:
-      summary: Delete user
-      operationId: deleteUser
-      tags:
-        - Users
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: User deleted
-        '404':
-          description: User not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
+        delete:
+            summary: Delete user
+            operationId: deleteUser
+            tags:
+                - Users
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                '204':
+                    description: User deleted
+                '404':
+                    description: User not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
 
-  /users/{id}/permanent:
-    delete:
-      summary: Permanently delete user
-      operationId: permanentlyDeleteUser
-      tags:
-        - Users
+    /users/{id}/permanent:
+        delete:
+            summary: Permanently delete user
+            operationId: permanentlyDeleteUser
+            tags:
+                - Users
 
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
 
-      responses:
-        '204':
-          description: User permanently deleted
+            responses:
+                '204':
+                    description: User permanently deleted
 
-        '404':
-          description: User not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: User not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
 
-  /roles:
-    post:
-      summary: Create role
-      operationId: createRole
-      tags:
-        - Roles
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateRoleRequest'
-      responses:
-        '201':
-          description: Role created
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 201
-                  data:
-                    $ref: '#/components/schemas/Role'
+    /roles:
+        post:
+            summary: Create role
+            operationId: createRole
+            tags:
+                - Roles
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateRoleRequest'
+            responses:
+                '201':
+                    description: Role created
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 201
+                                    data:
+                                        $ref: '#/components/schemas/Role'
 
-        '409':
-          description: Role already exists
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 409
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '422':
-          description: Validation error
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 422
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-    get:
-      summary: Get all roles
-      operationId: getAllRoles
-      tags:
-        - Roles
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 200
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Role'
+                '409':
+                    description: Role already exists
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 409
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '422':
+                    description: Validation error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 422
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+        get:
+            summary: Get all roles
+            operationId: getAllRoles
+            tags:
+                - Roles
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Role'
 
-  /roles/{id}:
-    get:
-      summary: Get role by id
-      operationId: getRole
-      tags:
-        - Roles
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 200
-                  data:
-                    $ref: '#/components/schemas/Role'
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 400
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Role not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-    put:
-      summary: Update role
-      operationId: updateRole
-      tags:
-        - Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateRoleRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 200
-                  data:
-                    $ref: '#/components/schemas/Role'
+    /roles/{id}:
+        get:
+            summary: Get role by id
+            operationId: getRole
+            tags:
+                - Roles
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        $ref: '#/components/schemas/Role'
+                '400':
+                    description: Bad request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 400
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: Role not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+        put:
+            summary: Update role
+            operationId: updateRole
+            tags:
+                - Roles
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateRoleRequest'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        $ref: '#/components/schemas/Role'
 
-        '404':
-          description: Role not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '409':
-          description: Role exists
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 409
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '422':
-          description: Validation error
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 422
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-    delete:
-      summary: Delete role
-      operationId: deleteRole
-      tags:
-        - Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: Role deleted
-        '404':
-          description: Role not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: Role not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '409':
+                    description: Role exists
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 409
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '422':
+                    description: Validation error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 422
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+        delete:
+            summary: Delete role
+            operationId: deleteRole
+            tags:
+                - Roles
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                '204':
+                    description: Role deleted
+                '404':
+                    description: Role not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
 
-  /users/{id}/roles:
-    post:
-      summary: Add role to user
-      operationId: addRoleToUser
-      tags:
-        - UserRoles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - roleId
-              properties:
-                roleId:
-                  type: string
-                  format: uuid
-      responses:
-          '204':
-            description: Role added to user
-          '400':
-            description: Bad request
-            content:
-              application/json:
-                schema:
-                  type: object
-                  required:
-                    - statusCode
-                    - error
-                  properties:
-                    statusCode:
-                      type: integer
-                      example: 400
-                    error:
-                      $ref: '#/components/schemas/ErrorResponse'
-          '404':
-            description: User or role not found
-            content:
-              application/json:
-                schema:
-                  type: object
-                  required:
-                    - statusCode
-                    - error
-                  properties:
-                    statusCode:
-                      type: integer
-                      example: 404
-                    error:
-                      $ref: '#/components/schemas/ErrorResponse'
-          '409':
-            description: User already has role
-            content:
-              application/json:
-                schema:
-                  type: object
-                  required:
-                    - statusCode
-                    - error
-                  properties:
-                    statusCode:
-                      type: integer
-                      example: 409
-                    error:
-                      $ref: '#/components/schemas/ErrorResponse'
+    /users/{id}/roles:
+        post:
+            summary: Add role to user
+            operationId: addRoleToUser
+            tags:
+                - UserRoles
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - roleId
+                            properties:
+                                roleId:
+                                    type: string
+                                    format: uuid
+            responses:
+                '204':
+                    description: Role added to user
+                '400':
+                    description: Bad request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 400
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: User or role not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '409':
+                    description: User already has role
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 409
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
 
-    get:
-      summary: Get roles for user
-      operationId: getUserRoles
-      tags:
-        - UserRoles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 200
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Role'
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 400
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: User not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
+        get:
+            summary: Get roles for user
+            operationId: getUserRoles
+            tags:
+                - UserRoles
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Role'
+                '400':
+                    description: Bad request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 400
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: User not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
 
-  /users/{id}/roles/{roleId}:
-    delete:
-      summary: Remove role from user
-      operationId: removeRoleFromUser
-      tags:
-        - UserRoles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: roleId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: Role removed from user
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 400
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: User or role not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
+    /users/{id}/roles/{roleId}:
+        delete:
+            summary: Remove role from user
+            operationId: removeRoleFromUser
+            tags:
+                - UserRoles
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+                - name: roleId
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                '204':
+                    description: Role removed from user
+                '400':
+                    description: Bad request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 400
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: User or role not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
 
-  /roles/{id}/users:
-    get:
-      summary: Get users with role
-      operationId: getUsersWithRole
-      tags:
-        - UserRoles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - data
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 200
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/User'
-        '400':
-          description: Role not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Role not found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - statusCode
-                  - error
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 404
-                  error:
-                    $ref: '#/components/schemas/ErrorResponse'
+    /roles/{id}/users:
+        get:
+            summary: Get users with role
+            operationId: getUsersWithRole
+            tags:
+                - UserRoles
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/User'
+                '400':
+                    description: Role not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: Role not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
 
 components:
-  schemas:
-    ErrorResponse:
-      type: object
-      required:
-        - type
-        - message
-      properties:
-        type:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-          nullable: true
-          additionalProperties: true
+    schemas:
+        ErrorResponse:
+            type: object
+            required:
+                - type
+                - message
+            properties:
+                type:
+                    type: string
+                message:
+                    type: string
+                details:
+                    type: object
+                    nullable: true
+                    additionalProperties: true
 
-    CreateUserRequest:
-      type: object
-      additionalProperties: false
-      required:
-        - email
-        - firstName
-        - lastName
-        - roles
-      properties:
-        email:
-          type: string
-          format: email
-          example: test@example.com
-        firstName:
-          type: string
-          minLength: 2
-          example: User
-        lastName:
-          type: string
-          minLength: 2
-          example: Name
-        roles:
-          type: array
-          items:
-            type: string
-            format: uuid
-          example:
-            - 12345678-1234-1234-1234-1234567890ab
+        CreateUserRequest:
+            type: object
+            additionalProperties: false
+            required:
+                - email
+                - firstName
+                - lastName
+                - roles
+            properties:
+                email:
+                    type: string
+                    format: email
+                    example: test@example.com
+                firstName:
+                    type: string
+                    minLength: 2
+                    example: User
+                lastName:
+                    type: string
+                    minLength: 2
+                    example: Name
+                roles:
+                    type: array
+                    items:
+                        type: string
+                        format: uuid
+                    example:
+                        - 12345678-1234-1234-1234-1234567890ab
 
-    UpdateUserRequest:
-      type: object
-      additionalProperties: false
-      required:
-        - id
-        - email
-        - firstName
-        - lastName
-        - roles
-      properties:
-        id:
-          type: string
-          format: uuid
-        email:
-          type: string
-          format: email
-          example: test@example.com
-        firstName:
-          type: string
-          minLength: 2
-          example: User
-        lastName:
-          type: string
-          minLength: 2
-          example: Name
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-          nullable: true
-        deletedAt:
-          type: string
-          format: date-time
-          nullable: true
-        roles:
-          type: array
-          items:
-            type: string
-            format: uuid
-          example:
-            - 12345678-1234-1234-1234-1234567890ab
+        UpdateUserRequest:
+            type: object
+            additionalProperties: false
+            required:
+                - id
+                - email
+                - firstName
+                - lastName
+                - roles
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                email:
+                    type: string
+                    format: email
+                    example: test@example.com
+                firstName:
+                    type: string
+                    minLength: 2
+                    example: User
+                lastName:
+                    type: string
+                    minLength: 2
+                    example: Name
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+                deletedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+                roles:
+                    type: array
+                    items:
+                        type: string
+                        format: uuid
+                    example:
+                        - 12345678-1234-1234-1234-1234567890ab
 
+        CreateRoleRequest:
+            type: object
+            additionalProperties: false
+            required:
+                - name
+                - description
+                - adminLevel
+            properties:
+                name:
+                    type: string
+                    example: test
+                description:
+                    type: string
+                    example: test
+                adminLevel:
+                    type: integer
+                    example: 100
 
-    CreateRoleRequest:
-      type: object
-      additionalProperties: false
-      required:
-        - name
-        - description
-        - adminLevel
-      properties:
-        name:
-          type: string
-          example: test
-        description:
-          type: string
-          example: test
-        adminLevel:
-          type: integer
-          example: 100
+        UpdateRoleRequest:
+            type: object
+            additionalProperties: false
+            required:
+                - id
+                - name
+                - description
+                - adminLevel
+                - createdAt
+                - updatedAt
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                name:
+                    type: string
+                    example: test
+                description:
+                    type: string
+                    example: test
+                adminLevel:
+                    type: integer
+                    example: 100
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
 
-    UpdateRoleRequest:
-      type: object
-      additionalProperties: false
-      required:
-        - id
-        - name
-        - description
-        - adminLevel
-        - createdAt
-        - updatedAt
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          example: test
-        description:
-          type: string
-          example: test
-        adminLevel:
-          type: integer
-          example: 100
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-          nullable: true
+        User:
+            type: object
+            additionalProperties: false
+            required:
+                - id
+                - email
+                - firstName
+                - lastName
+                - roles
+                - updatedAt
+                - createdAt
+                - deletedAt
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                email:
+                    type: string
+                    format: email
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+                roles:
+                    type: array
+                    items:
+                        type: string
+                        format: uuid
+                    example:
+                        - 12345678-1234-1234-1234-1234567890ab
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+                deletedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
 
-    User:
-      type: object
-      additionalProperties: false
-      required:
-        - id
-        - email
-        - firstName
-        - lastName
-        - roles
-        - updatedAt
-        - createdAt
-        - deletedAt
-      properties:
-        id:
-          type: string
-          format: uuid
-        email:
-          type: string
-          format: email
-        firstName:
-          type: string
-        lastName:
-          type: string
-        roles:
-          type: array
-          items:
-            type: string
-            format: uuid
-          example:
-            - 12345678-1234-1234-1234-1234567890ab
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-          nullable: true
-        deletedAt:
-          type: string
-          format: date-time
-          nullable: true
-
-    Role:
-      type: object
-      additionalProperties: false
-      required:
-        - id
-        - name
-        - description
-        - adminLevel
-        - updatedAt
-        - createdAt
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          example: Test
-        description:
-          type: string
-          example: Test
-        adminLevel:
-          type: integer
-          example: 100
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-          nullable: true
+        Role:
+            type: object
+            additionalProperties: false
+            required:
+                - id
+                - name
+                - description
+                - adminLevel
+                - updatedAt
+                - createdAt
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                name:
+                    type: string
+                    example: Test
+                description:
+                    type: string
+                    example: Test
+                adminLevel:
+                    type: integer
+                    example: 100
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                    nullable: true

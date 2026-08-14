@@ -1,4 +1,4 @@
-import { getAccessToken, setAccessToken, clearAccessToken } from "@/stores/tokenStorage.js";
+import { getAccessToken, setAccessToken, clearAccessToken } from '@/stores/tokenStorage.js';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/users": {
+    '/users': {
         parameters: {
             query?: never;
             header?: never;
@@ -12,17 +12,17 @@ export interface paths {
             cookie?: never;
         };
         /** Get all users */
-        get: operations["getAllUsers"];
+        get: operations['getAllUsers'];
         put?: never;
         /** Create user */
-        post: operations["createUser"];
+        post: operations['createUser'];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/users/{id}": {
+    '/users/{id}': {
         parameters: {
             query?: never;
             header?: never;
@@ -30,18 +30,18 @@ export interface paths {
             cookie?: never;
         };
         /** Get user by ID */
-        get: operations["getUserById"];
+        get: operations['getUserById'];
         /** Update user */
-        put: operations["updateUser"];
+        put: operations['updateUser'];
         post?: never;
         /** Delete user */
-        delete: operations["deleteUser"];
+        delete: operations['deleteUser'];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/users/{id}/permanent": {
+    '/users/{id}/permanent': {
         parameters: {
             query?: never;
             header?: never;
@@ -52,13 +52,13 @@ export interface paths {
         put?: never;
         post?: never;
         /** Permanently delete user */
-        delete: operations["permanentlyDeleteUser"];
+        delete: operations['permanentlyDeleteUser'];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/roles": {
+    '/roles': {
         parameters: {
             query?: never;
             header?: never;
@@ -66,17 +66,17 @@ export interface paths {
             cookie?: never;
         };
         /** Get all roles */
-        get: operations["getAllRoles"];
+        get: operations['getAllRoles'];
         put?: never;
         /** Create role */
-        post: operations["createRole"];
+        post: operations['createRole'];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/roles/{id}": {
+    '/roles/{id}': {
         parameters: {
             query?: never;
             header?: never;
@@ -84,18 +84,18 @@ export interface paths {
             cookie?: never;
         };
         /** Get role by id */
-        get: operations["getRole"];
+        get: operations['getRole'];
         /** Update role */
-        put: operations["updateRole"];
+        put: operations['updateRole'];
         post?: never;
         /** Delete role */
-        delete: operations["deleteRole"];
+        delete: operations['deleteRole'];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/users/{id}/roles": {
+    '/users/{id}/roles': {
         parameters: {
             query?: never;
             header?: never;
@@ -103,17 +103,17 @@ export interface paths {
             cookie?: never;
         };
         /** Get roles for user */
-        get: operations["getUserRoles"];
+        get: operations['getUserRoles'];
         put?: never;
         /** Add role to user */
-        post: operations["addRoleToUser"];
+        post: operations['addRoleToUser'];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/users/{id}/roles/{roleId}": {
+    '/users/{id}/roles/{roleId}': {
         parameters: {
             query?: never;
             header?: never;
@@ -124,13 +124,13 @@ export interface paths {
         put?: never;
         post?: never;
         /** Remove role from user */
-        delete: operations["removeRoleFromUser"];
+        delete: operations['removeRoleFromUser'];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/roles/{id}/users": {
+    '/roles/{id}/users': {
         parameters: {
             query?: never;
             header?: never;
@@ -138,7 +138,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get users with role */
-        get: operations["getUsersWithRole"];
+        get: operations['getUsersWithRole'];
         put?: never;
         post?: never;
         delete?: never;
@@ -280,10 +280,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 200 */
                         statusCode: number;
-                        data: components["schemas"]["User"][];
+                        data: components['schemas']['User'][];
                     };
                 };
             };
@@ -298,7 +298,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateUserRequest"];
+                'application/json': components['schemas']['CreateUserRequest'];
             };
         };
         responses: {
@@ -308,9 +308,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         statusCode: number;
-                        data: components["schemas"]["User"];
+                        data: components['schemas']['User'];
                     };
                 };
             };
@@ -320,10 +320,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 409 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -333,10 +333,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 422 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -359,10 +359,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 200 */
                         statusCode: number;
-                        data: components["schemas"]["User"];
+                        data: components['schemas']['User'];
                     };
                 };
             };
@@ -372,10 +372,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 400 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -385,10 +385,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -405,7 +405,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdateUserRequest"];
+                'application/json': components['schemas']['UpdateUserRequest'];
             };
         };
         responses: {
@@ -415,10 +415,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 200 */
                         statusCode: number;
-                        data: components["schemas"]["User"];
+                        data: components['schemas']['User'];
                     };
                 };
             };
@@ -428,10 +428,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -441,10 +441,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 409 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -454,10 +454,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 422 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -487,10 +487,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -520,10 +520,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -544,10 +544,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 200 */
                         statusCode: number;
-                        data: components["schemas"]["Role"][];
+                        data: components['schemas']['Role'][];
                     };
                 };
             };
@@ -562,7 +562,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateRoleRequest"];
+                'application/json': components['schemas']['CreateRoleRequest'];
             };
         };
         responses: {
@@ -572,10 +572,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 201 */
                         statusCode: number;
-                        data: components["schemas"]["Role"];
+                        data: components['schemas']['Role'];
                     };
                 };
             };
@@ -585,10 +585,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 409 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -598,10 +598,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 422 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -622,10 +622,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 200 */
                         statusCode: number;
-                        data: components["schemas"]["Role"];
+                        data: components['schemas']['Role'];
                     };
                 };
             };
@@ -635,10 +635,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 400 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -648,10 +648,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -668,7 +668,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdateRoleRequest"];
+                'application/json': components['schemas']['UpdateRoleRequest'];
             };
         };
         responses: {
@@ -678,10 +678,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 200 */
                         statusCode: number;
-                        data: components["schemas"]["Role"];
+                        data: components['schemas']['Role'];
                     };
                 };
             };
@@ -691,10 +691,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -704,10 +704,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 409 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -717,10 +717,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 422 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -750,10 +750,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -776,10 +776,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 200 */
                         statusCode: number;
-                        data: components["schemas"]["Role"][];
+                        data: components['schemas']['Role'][];
                     };
                 };
             };
@@ -789,10 +789,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 400 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -802,10 +802,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -822,7 +822,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
+                'application/json': {
                     /** Format: uuid */
                     roleId: string;
                 };
@@ -842,10 +842,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 400 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -855,10 +855,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -868,10 +868,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 409 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -902,10 +902,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 400 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -915,10 +915,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -941,10 +941,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 200 */
                         statusCode: number;
-                        data: components["schemas"]["User"][];
+                        data: components['schemas']['User'][];
                     };
                 };
             };
@@ -954,10 +954,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };
@@ -967,10 +967,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
+                    'application/json': {
                         /** @example 404 */
                         statusCode: number;
-                        error: components["schemas"]["ErrorResponse"];
+                        error: components['schemas']['ErrorResponse'];
                     };
                 };
             };

@@ -10,13 +10,13 @@ const { toasts } = storeToRefs(notificationStore);
 </script>
 
 <template>
-    <div class="toast-container">
-        <ToastItem
-            v-for="toast in toasts"
-            :key="toast.id"
-            :toast="toast"
-        />
-    </div>
+  <div class="toast-container">
+    <ToastItem
+      v-for="toast in toasts"
+      :key="toast.id"
+      :toast="toast"
+    />
+  </div>
 </template>
 
 <style scoped>

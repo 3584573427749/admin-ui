@@ -22,6 +22,7 @@
         "pinia": "^2.1.7",
         "vue": "^3.4.0",
         "vue-router": "^4.3.0",
+        "vuedraggable": "^4.1.0",
         "vuetify": "^3.12.8"
     },
     "devDependencies": {
@@ -30,6 +31,7 @@
         "@vitest/coverage-v8": "^4.1.10",
         "@vue/test-utils": "^2.4.11",
         "eslint": "^8.56.0",
+        "eslint-plugin-vue": "^10.10.0",
         "husky": "^9.1.7",
         "jsdom": "^29.1.1",
         "lint-staged": "^17.3.0",
@@ -38,7 +40,8 @@
         "playwright": "^1.61.1",
         "prettier": "^3.2.5",
         "vite": "^8.1.0",
-        "vitest": "^4.1.9"
+        "vitest": "^4.1.9",
+        "vue-eslint-parser": "^10.4.1"
     },
     "allowScripts": {
         "vue-demi@0.14.10": true

@@ -20,8 +20,8 @@ const menuItems = [
     {
         label: 'Grupper',
         subItems: [
-            { label: 'Gruppinfo', route: '/groupsView' },
-            { label: 'Ledare', route: '/leadersView' }
+            { label: 'Gruppnivåer', route: '/gruppniva' },
+            { label: 'Gruppinfo', route: '/groupsView' }
         ]
     },
     {
@@ -46,12 +46,15 @@ function navigateTo(route) {
 </script>
 
 <template>
-    <div class="app-layout">
-        <AppHeader :items="menuItems" @navigate="navigateTo" />
-        <content class="app-main">
-            <router-view />
-        </content>
+  <div class="app-layout">
+    <AppHeader
+      :items="menuItems"
+      @navigate="navigateTo"
+    />
+    <content class="app-main">
+      <router-view />
+    </content>
 
-        <AppFooter />
-    </div>
+    <AppFooter />
+  </div>
 </template>

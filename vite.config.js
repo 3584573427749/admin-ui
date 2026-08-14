@@ -21,7 +21,23 @@ export default defineConfig({
 
     server: {
         host: '0.0.0.0',
-        port: 5173
+        port: 5173,
+        watch: {
+            usePolling: true
+        },
+        proxy: {
+            '/auth': {
+                target: 'http://auth:8080',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/auth/, '')
+            },
+
+            '/group': {
+                target: 'http://group:8080',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/group/, '')
+            }
+        }
     },
 
     test: {

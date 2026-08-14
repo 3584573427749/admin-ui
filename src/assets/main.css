@@ -106,7 +106,7 @@ body {
 }
 
 .app-main::before {
-    content: "";
+    content: '';
     position: absolute;
 
     inset: 0;
@@ -262,7 +262,7 @@ a:active {
     border-radius: 0 8px 8px 8px;
 }
 
-.ui-selected ,
+.ui-selected,
 .v-tab.v-tab--selected {
     background-color: var(--color-primary) !important;
     color: white !important;

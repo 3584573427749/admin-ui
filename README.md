@@ -55,6 +55,7 @@ Admin UI används för administration av användare, roller och andra funktioner
 
 ```bash
 npm install
+```
 ````
 
 ### Starta utvecklingsserver
@@ -111,11 +112,11 @@ npm test
 
 Applikationen innehåller tester för:
 
-* Stores
-* Services
-* Vue-komponenter
-* Dialoger
-* Routing-relaterad logik
+- Stores
+- Services
+- Vue-komponenter
+- Dialoger
+- Routing-relaterad logik
 
 Exempel:
 
@@ -262,10 +263,10 @@ ToastItem
 
 Pull requests valideras genom:
 
-* OpenAPI-validering
-* ESLint
-* Enhets- och komponenttester
-* Produktionsbyggning
+- OpenAPI-validering
+- ESLint
+- Enhets- och komponenttester
+- Produktionsbyggning
 
 ### Release
 

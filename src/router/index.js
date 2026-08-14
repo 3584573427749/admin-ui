@@ -39,20 +39,30 @@ export const router = createRouter({
                     name: 'user',
                     component: () => import('../views/UsersView.vue')
                 },
-               {
+                {
                     path: 'roller',
                     name: 'roles',
                     component: () => import('../views/RolesView.vue')
                 },
-               {
+                {
                     path: 'roller/:id',
                     name: 'role',
                     component: () => import('../views/RolesView.vue')
                 },
-               {
+                {
                     path: 'anvandare/raderade',
                     name: 'deletedusers',
                     component: () => import('../views/DeletedUsersView.vue')
+                },
+                {
+                    path: 'gruppniva',
+                    name: 'grouplevels',
+                    component: () => import('../views/GroupLevelsView.vue')
+                },
+                {
+                    path: 'gruppniva/:id',
+                    name: 'grouplevel',
+                    component: () => import('../views/GroupLevelsView.vue')
                 },
                 {
                     path: 'about',

@@ -244,4 +244,3 @@ describe('roleStore', () => {
         expect(roleService.deleteRole).not.toHaveBeenCalled();
     });
 });
-

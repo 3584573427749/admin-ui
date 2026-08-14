@@ -36,48 +36,55 @@ watch(
 </script>
 
 <template>
-    <div class="roles-view">
-        <div class="roles-view__list">
-            <h3>Roller</h3>
+  <div class="roles-view">
+    <div class="roles-view__list">
+      <h3>Roller</h3>
 
-            <v-list density="compact">
-                <v-list-item
-                    v-for="role in roles"
-                    :key="role.id"
-                    :title="role.name"
-                    :class="[
-                        'ui-selectable',
-                        {
-                            'ui-selected': role.id === selectedRole?.id
-                        }
-                    ]"
-                    @click="router.push(`/roller/${role.id}`)"
-                />
-            </v-list>
-        </div>
-
-        <div class="roles-view__editor">
-            <div class="tab-panel">
-                <v-tabs v-model="activeTab" color="primary">
-                    <v-tab value="info"> Information </v-tab>
-
-                    <v-tab value="users"> Användare </v-tab>
-                </v-tabs>
-
-                <div class="tab-panel__content">
-                    <v-window v-model="activeTab">
-                        <v-window-item value="info">
-                            <RoleInfoTab />
-                        </v-window-item>
-
-                        <v-window-item value="users">
-                            <RoleUsersTab />
-                        </v-window-item>
-                    </v-window>
-                </div>
-            </div>
-        </div>
+      <v-list density="compact">
+        <v-list-item
+          v-for="role in roles"
+          :key="role.id"
+          :title="role.name"
+          :class="[
+            'ui-selectable',
+            {
+              'ui-selected': role.id === selectedRole?.id
+            }
+          ]"
+          @click="router.push(`/roller/${role.id}`)"
+        />
+      </v-list>
     </div>
+
+    <div class="roles-view__editor">
+      <div class="tab-panel">
+        <v-tabs
+          v-model="activeTab"
+          color="primary"
+        >
+          <v-tab value="info">
+            Information
+          </v-tab>
+
+          <v-tab value="users">
+            Användare
+          </v-tab>
+        </v-tabs>
+
+        <div class="tab-panel__content">
+          <v-window v-model="activeTab">
+            <v-window-item value="info">
+              <RoleInfoTab />
+            </v-window-item>
+
+            <v-window-item value="users">
+              <RoleUsersTab />
+            </v-window-item>
+          </v-window>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
