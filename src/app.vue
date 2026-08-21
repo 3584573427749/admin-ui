@@ -3,7 +3,6 @@ import { ref, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 import SplashScreen from '@/components/SplashScreen.vue';
-import { api } from '@/services/apiService';
 import { useAuthStore } from '@/stores/auth';
 import ToastContainer from '@/components/ToastContainer.vue';
 
@@ -58,7 +57,7 @@ watch(
 </script>
 
 <template>
-    <SplashScreen v-if="isInitializing" />
-    <router-view v-else />
-    <ToastContainer />
+  <SplashScreen v-if="isInitializing" />
+  <router-view v-else />
+  <ToastContainer />
 </template>

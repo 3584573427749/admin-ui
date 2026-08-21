@@ -67,19 +67,26 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div
-        :class="toastClass"
-        @mouseenter="pauseTimer"
-        @mouseleave="resumeTimer"
-        @touchstart="pauseTimer"
-        @touchend="resumeTimer"
-    >
-        <div class="toast__message">
-            {{ toast.message }}
-        </div>
-
-        <button class="toast__close" type="button" aria-label="Stäng" @click="close">×</button>
+  <div
+    :class="toastClass"
+    @mouseenter="pauseTimer"
+    @mouseleave="resumeTimer"
+    @touchstart="pauseTimer"
+    @touchend="resumeTimer"
+  >
+    <div class="toast__message">
+      {{ toast.message }}
     </div>
+
+    <button
+      class="toast__close"
+      type="button"
+      aria-label="Stäng"
+      @click="close"
+    >
+      ×
+    </button>
+  </div>
 </template>
 
 <style scoped>

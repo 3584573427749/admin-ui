@@ -58,13 +58,13 @@ export const useGroupLevelStore = defineStore('groupLevelStore', () => {
         const groupLevel = selectedGroupLevel.value;
         try {
             if (groupLevel.id) {
-                selectedGroupLevel.value = await groupLevelService.updateUser(
+                selectedGroupLevel.value = await groupLevelService.updateGroupLevel(
                     groupLevel.id,
                     groupLevel
                 );
                 notificationStore.success('Gruppnivån uppdaterades.');
             } else {
-                selectedGroupLevel.value = await groupLevelService.createUser({
+                selectedGroupLevel.value = await groupLevelService.createGroupLevel({
                     name: groupLevel.name,
                     description: groupLevel.description,
                     sortOrder: groupLevel.sortOrder

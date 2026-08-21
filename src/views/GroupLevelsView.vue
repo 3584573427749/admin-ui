@@ -1,14 +1,16 @@
 <script setup>
-import { onMounted, watch } from 'vue';
+import { onMounted, ref, toRaw, watch } from 'vue';
 import draggable from 'vuedraggable';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useGroupLevelStore } from '@/stores/groupLevelStore.js';
+import ConfirmDialog from '@/components/ConfirmDialog.vue';
+const showDeleteDialog = ref(false);
 
 const router = useRouter();
 const route = useRoute();
 const groupLevelStore = useGroupLevelStore();
-const { groupLevels, selectedGroupLevel, newGroupLevel } = storeToRefs(groupLevelStore);
+const { groupLevels, selectedGroupLevel } = storeToRefs(groupLevelStore);
 
 onMounted(async () => {
     await groupLevelStore.loadGroupLevels();
@@ -31,19 +33,22 @@ watch(
 );
 
 function selectLevel(level) {
-    selectedGroupLevel.value = JSON.parse(JSON.stringify(level));
+    selectedGroupLevel.value = structuredClone(toRaw(level));
 }
 
 function createNewLevel() {
-    selectedGroupLevel.value = newGroupLevel();
+    groupLevelStore.createNewGroupLevel();
 }
 
 function saveLevel() {
-    console.log('save', selectedGroupLevel.value);
+    if (selectedGroupLevel.value.sortOrder === 0) {
+        selectedGroupLevel.value.sortOrder = groupLevels.value.length + 1;
+    }
+    groupLevelStore.saveGroupLevel(selectedGroupLevel.value);
 }
-
-function deleteLevel(id) {
-    groupLevels.value = groupLevels.value.filter((level) => level.id !== id);
+function askDeleteLevel(level) {
+    selectedGroupLevel.value = level;
+    showDeleteDialog.value = true;
 }
 
 function updateSortOrder() {
@@ -55,6 +60,13 @@ function updateSortOrder() {
 }
 </script>
 <template>
+  <ConfirmDialog
+    v-model="showDeleteDialog"
+    title="Ta bort gruppnivå"
+    :text="`Vill du verkligen ta bort ${selectedGroupLevel?.name ?? ''}?`"
+    confirm-text="Ta bort"
+    @confirm="groupLevelStore.deleteSelectedGroupLevel(selectedGroupLevel.id)"
+  />
   <div class="group-levels-view">
     <h2>Gruppnivåer</h2>
 
@@ -114,7 +126,7 @@ function updateSortOrder() {
             <v-icon
               icon="mdi-delete"
               color="error"
-              @click="deleteLevel(element.id)"
+              @click="askDeleteLevel(element.id)"
             />
           </div>
         </div>

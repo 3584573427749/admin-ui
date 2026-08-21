@@ -11,7 +11,7 @@ import router from '@/router/index.js';
 const route = useRoute();
 const roleStore = useRoleStore();
 
-const { roles, selectedRole, loading } = storeToRefs(roleStore);
+const { roles, selectedRole } = storeToRefs(roleStore);
 
 const activeTab = ref('info');
 

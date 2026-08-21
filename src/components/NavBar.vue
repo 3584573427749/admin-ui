@@ -91,55 +91,64 @@ function closeAllMenus() {
 </script>
 
 <template>
-    <nav class="nav-bar">
-        <div
-            v-for="item in items"
-            :key="item.label"
-            class="nav-bar__item"
-            @mouseenter="openHoverMenu(item.label)"
-            @mouseleave="closeHoverMenu(item.label)"
+  <nav class="nav-bar">
+    <div
+      v-for="item in items"
+      :key="item.label"
+      class="nav-bar__item"
+      @mouseenter="openHoverMenu(item.label)"
+      @mouseleave="closeHoverMenu(item.label)"
+    >
+      <button
+        :class="[
+          'nav-bar__button',
+          {
+            'nav-bar__button--active': isActive(item)
+          }
+        ]"
+        @click="handleTopLevelClick(item)"
+      >
+        {{ item.label }}
+
+        <span
+          v-if="item.subItems?.length"
+          class="nav-bar__arrow"
+        > ▼ </span>
+      </button>
+
+      <div
+        v-if="item.subItems?.length"
+        v-show="openMenu === item.label"
+        class="nav-bar__submenu"
+      >
+        <template
+          v-for="subItem in item.subItems"
+          :key="`${item.label}-${subItem.label}`"
         >
-            <button
-                :class="[
-                    'nav-bar__button',
-                    {
-                        'nav-bar__button--active': isActive(item)
-                    }
-                ]"
-                @click="handleTopLevelClick(item)"
-            >
-                {{ item.label }}
+          <div
+            v-if="subItem.label === '-'"
+            class="nav-bar__separator"
+          />
 
-                <span v-if="item.subItems?.length" class="nav-bar__arrow"> ▼ </span>
-            </button>
-
-            <div
-                v-if="item.subItems?.length"
-                v-show="openMenu === item.label"
-                class="nav-bar__submenu"
-            >
-                <template v-for="subItem in item.subItems" :key="`${item.label}-${subItem.label}`">
-                    <div v-if="subItem.label === '-'" class="nav-bar__separator" />
-
-                    <button
-                        v-else
-                        :class="[
-                            'nav-bar__submenu-item',
-                            {
-                                'nav-bar__submenu-item--active': subItem.route === route.path
-                            }
-                        ]"
-                        @click="
-                            navigate(subItem.route);
-                            closeAllMenus();
-                        "
-                    >
-                        {{ subItem.label }}
-                    </button>
-                </template>
-            </div>
-        </div>
-    </nav>
+          <button
+            v-else
+            :class="[
+              'nav-bar__submenu-item',
+              {
+                'nav-bar__submenu-item--active': subItem.route === route.path
+              }
+            ]"
+            @click="
+              navigate(subItem.route);
+              closeAllMenus();
+            "
+          >
+            {{ subItem.label }}
+          </button>
+        </template>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <style scoped>
