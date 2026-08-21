@@ -24,7 +24,7 @@ describe('roleService', () => {
 
         await roleService.getRoles();
 
-        expect(api.get).toHaveBeenCalledWith('/roles');
+        expect(api.get).toHaveBeenCalledWith('/auth/roles');
     });
 
     it('gets a role', async () => {
@@ -34,7 +34,7 @@ describe('roleService', () => {
 
         await roleService.getRole('role-1');
 
-        expect(api.get).toHaveBeenCalledWith('/roles/role-1');
+        expect(api.get).toHaveBeenCalledWith('/auth/roles/role-1');
     });
 
     it('creates a role', async () => {
@@ -50,7 +50,7 @@ describe('roleService', () => {
 
         await roleService.createRole(role);
 
-        expect(api.post).toHaveBeenCalledWith('/roles', role);
+        expect(api.post).toHaveBeenCalledWith('/auth/roles', role);
     });
 
     it('updates a role', async () => {
@@ -67,7 +67,7 @@ describe('roleService', () => {
 
         await roleService.updateRole('role-1', role);
 
-        expect(api.put).toHaveBeenCalledWith('/roles/role-1', role);
+        expect(api.put).toHaveBeenCalledWith('/auth/roles/role-1', role);
     });
 
     it('deletes a role', async () => {
@@ -75,7 +75,7 @@ describe('roleService', () => {
 
         await roleService.deleteRole('role-1');
 
-        expect(api.delete).toHaveBeenCalledWith('/roles/role-1');
+        expect(api.delete).toHaveBeenCalledWith('/auth/roles/role-1');
     });
 
     it('gets users for a role', async () => {
@@ -85,7 +85,7 @@ describe('roleService', () => {
 
         await roleService.getRoleUsers('role-1');
 
-        expect(api.get).toHaveBeenCalledWith('/roles/role-1/users');
+        expect(api.get).toHaveBeenCalledWith('/auth/roles/role-1/users');
     });
 
     it('removes a user from a role', async () => {
@@ -93,7 +93,7 @@ describe('roleService', () => {
 
         await roleService.removeRoleUser('role-1', 'user-1');
 
-        expect(api.delete).toHaveBeenCalledWith('/users/user-1/roles/role-1');
+        expect(api.delete).toHaveBeenCalledWith('/auth/users/user-1/roles/role-1');
     });
 
     it('returns roles from getRoles', async () => {

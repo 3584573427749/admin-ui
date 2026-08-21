@@ -24,7 +24,7 @@ describe('userService', () => {
 
         await userService.getUsers();
 
-        expect(api.get).toHaveBeenCalledWith('/users');
+        expect(api.get).toHaveBeenCalledWith('/auth/users');
     });
 
     it('gets a user', async () => {
@@ -34,7 +34,7 @@ describe('userService', () => {
 
         await userService.getUser('user-1');
 
-        expect(api.get).toHaveBeenCalledWith('/users/user-1');
+        expect(api.get).toHaveBeenCalledWith('/auth/users/user-1');
     });
 
     it('creates a user', async () => {
@@ -50,7 +50,7 @@ describe('userService', () => {
 
         await userService.createUser(user);
 
-        expect(api.post).toHaveBeenCalledWith('/users', user);
+        expect(api.post).toHaveBeenCalledWith('/auth/users', user);
     });
 
     it('updates a user', async () => {
@@ -67,7 +67,7 @@ describe('userService', () => {
 
         await userService.updateUser('user-1', user);
 
-        expect(api.put).toHaveBeenCalledWith('/users/user-1', user);
+        expect(api.put).toHaveBeenCalledWith('/auth/users/user-1', user);
     });
 
     it('deletes a user', async () => {
@@ -75,7 +75,7 @@ describe('userService', () => {
 
         await userService.deleteUser('user-1');
 
-        expect(api.delete).toHaveBeenCalledWith('/users/user-1');
+        expect(api.delete).toHaveBeenCalledWith('/auth/users/user-1');
     });
 
     it('returns users from getUsers', async () => {
