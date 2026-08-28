@@ -5,6 +5,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useGroupLevelStore } from '@/stores/groupLevelStore.js';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
+import { updateGroupLevelSortOrder } from '@/services/groupLevelService';
+
 const showDeleteDialog = ref(false);
 
 const router = useRouter();
@@ -51,12 +53,30 @@ function askDeleteLevel(level) {
     showDeleteDialog.value = true;
 }
 
-function updateSortOrder() {
-    groupLevels.value.forEach((level, index) => {
-        level.sortOrder = index + 1;
-    });
+async function updateSortOrder() {
+    try {
+        groupLevels.value.forEach((level, index) => {
+            level.sortOrder = index + 1;
+        });
 
-    console.log(groupLevels.value);
+        await updateGroupLevelSortOrder(
+            groupLevels.value.map((level) => ({
+                id: level.id,
+                sortOrder: level.sortOrder
+            }))
+        );
+    } catch (error) {
+        console.error(error);
+
+        await groupLevelStore.loadGroupLevels();
+    }
+}
+async function removeGroupLevel() {
+    try {
+        await groupLevelStore.deleteSelectedGroupLevel();
+    } catch (error) {
+        console.error(error);
+    }
 }
 </script>
 <template>
@@ -65,7 +85,7 @@ function updateSortOrder() {
     title="Ta bort gruppnivå"
     :text="`Vill du verkligen ta bort ${selectedGroupLevel?.name ?? ''}?`"
     confirm-text="Ta bort"
-    @confirm="groupLevelStore.deleteSelectedGroupLevel(selectedGroupLevel.id)"
+    @confirm="removeGroupLevel"
   />
   <div class="group-levels-view">
     <h2>Gruppnivåer</h2>

@@ -81,7 +81,7 @@ export const useGroupLevelStore = defineStore('groupLevelStore', () => {
     }
 
     async function deleteSelectedGroupLevel() {
-        const { id } = selectedGroupLevel.value;
+        const id = selectedGroupLevel.value;
 
         if (!id) {
             createNewGroupLevel();
