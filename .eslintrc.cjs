@@ -1,21 +1,32 @@
 module.exports = {
     root: true,
+
     env: {
         browser: true,
-        es2021: true
+        es2021: true,
+        node: true
     },
-
     globals: {
         __APP_VERSION__: 'readonly'
     },
-    extends: ['eslint:recommended'],
+
+    parser: 'vue-eslint-parser',
+
     parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module'
     },
+
+    extends: ['eslint:recommended', 'plugin:vue/recommended'],
+
     rules: {
-        // Mallen ska vara permissiv
-        'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+        'no-unused-vars': [
+            'warn',
+            {
+                argsIgnorePattern: '^_'
+            }
+        ],
+
         'no-console': 'off'
     }
 };

@@ -14,12 +14,7 @@ vi.mock('@/components/ConfirmDialog.vue', () => ({
             />
         `,
         emits: ['confirm', 'update:modelValue'],
-        props: [
-            'modelValue',
-            'title',
-            'text',
-            'confirmText'
-        ]
+        props: ['modelValue', 'title', 'text', 'confirmText']
     }
 }));
 

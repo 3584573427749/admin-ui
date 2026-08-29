@@ -49,41 +49,66 @@ async function saveUser() {
 }
 </script>
 <template>
-    <ConfirmDialog
-        v-model="showDeleteDialog"
-        title="Ta bort användare"
-        text="Vill du verkligen ta bort användaren?"
-        confirm-text="Ta bort"
-        @confirm="removeUser"
-    />
-    <v-window-item value="info">
-        <div class="user-form" density="compact">
-            <v-text-field v-model="selectedUser.firstName" label="Förnamn" />
-            <v-text-field v-model="selectedUser.lastName" label="Efternamn" />
-            <v-text-field v-model="selectedUser.email" label="E-post" />
-            <h4>Roller</h4>
-            <div class="role-panel">
-                <v-checkbox
-                    v-for="role in roles"
-                    :key="role.id"
-                    :label="role.name"
-                    :model-value="isRoleSelected(role.id)"
-                    density="compact"
-                    @update:model-value="toggleRole(role.id)"
-                />
-            </div>
+  <ConfirmDialog
+    v-model="showDeleteDialog"
+    title="Ta bort användare"
+    text="Vill du verkligen ta bort användaren?"
+    confirm-text="Ta bort"
+    @confirm="removeUser"
+  />
+  <v-window-item value="info">
+    <div
+      class="user-form"
+      density="compact"
+    >
+      <v-text-field
+        v-model="selectedUser.firstName"
+        label="Förnamn"
+      />
+      <v-text-field
+        v-model="selectedUser.lastName"
+        label="Efternamn"
+      />
+      <v-text-field
+        v-model="selectedUser.email"
+        label="E-post"
+      />
+      <h4>Roller</h4>
+      <div class="role-panel">
+        <v-checkbox
+          v-for="role in roles"
+          :key="role.id"
+          :label="role.name"
+          :model-value="isRoleSelected(role.id)"
+          density="compact"
+          @update:model-value="toggleRole(role.id)"
+        />
+      </div>
 
-            <div class="button-row">
-                <v-btn color="primary" @click="saveUser"> Spara </v-btn>
-                <v-btn color="error" variant="outlined" @click="showDeleteDialog = true">
-                    Radera
-                </v-btn>
-                <v-btn color="success" variant="outlined" @click="userStore.createNewUser">
-                    Ny
-                </v-btn>
-            </div>
-        </div>
-    </v-window-item>
+      <div class="button-row">
+        <v-btn
+          color="primary"
+          @click="saveUser"
+        >
+          Spara
+        </v-btn>
+        <v-btn
+          color="error"
+          variant="outlined"
+          @click="showDeleteDialog = true"
+        >
+          Radera
+        </v-btn>
+        <v-btn
+          color="success"
+          variant="outlined"
+          @click="userStore.createNewUser"
+        >
+          Ny
+        </v-btn>
+      </div>
+    </div>
+  </v-window-item>
 </template>
 
 <style scoped>

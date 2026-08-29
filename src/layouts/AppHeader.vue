@@ -16,9 +16,16 @@ function navigate(route) {
 </script>
 
 <template>
-    <header class="app-header">
-        <img src="@/assets/images/logo.svg" alt="Simning.ax" class="app-header__logo" />
+  <header class="app-header">
+    <img
+      src="@/assets/images/logo.svg"
+      alt="Simning.ax"
+      class="app-header__logo"
+    >
 
-        <NavBar :items="items" @navigate="navigate" />
-    </header>
+    <NavBar
+      :items="items"
+      @navigate="navigate"
+    />
+  </header>
 </template>

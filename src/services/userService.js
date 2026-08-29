@@ -6,7 +6,7 @@ import { api } from '@/services/apiService';
  * @returns {Promise<Array>}
  */
 export async function getUsers() {
-    const response = await api.get('/users');
+    const response = await api.get('/auth/users');
 
     return response.data;
 }
@@ -18,7 +18,7 @@ export async function getUsers() {
  * @returns {Promise<Object>}
  */
 export async function getUser(id) {
-    const response = await api.get(`/users/${id}`);
+    const response = await api.get(`/auth/users/${id}`);
 
     return response.data;
 }
@@ -30,7 +30,7 @@ export async function getUser(id) {
  * @returns {Promise<Object>}
  */
 export async function createUser(user) {
-    const response = await api.post('/users', user);
+    const response = await api.post('/auth/users', user);
 
     return response.data;
 }
@@ -43,7 +43,7 @@ export async function createUser(user) {
  * @returns {Promise<Object>}
  */
 export async function updateUser(id, user) {
-    const response = await api.put(`/users/${id}`, user);
+    const response = await api.put(`/auth/users/${id}`, user);
 
     return response.data;
 }
@@ -54,5 +54,5 @@ export async function updateUser(id, user) {
  * @param {string} id
  */
 export async function deleteUser(id) {
-    await api.delete(`/users/${id}`);
+    await api.delete(`/auth/users/${id}`);
 }

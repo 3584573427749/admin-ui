@@ -21,4 +21,3 @@ export const vuetifyStubs = {
         template: '<button><slot /></button>'
     }
 };
-

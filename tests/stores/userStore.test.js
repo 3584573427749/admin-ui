@@ -3,9 +3,9 @@ import { createPinia, setActivePinia } from 'pinia';
 import { useUserStore } from '@/stores/userStore';
 import * as userService from '@/services/userService';
 import { useNotificationStore } from '@/stores/notificationStore';
-import {USER, USERS} from "../fixtures/user.js"
-import {VALIDATION_ERROR, USER_NOT_FOUND_ERROR, USER_EXISTS_ERROR} from "../fixtures/error.js"
-import {UPDATE_USER_REQUEST, CREATE_USER_REQUEST} from "../fixtures/request.js"
+import { USER, USERS } from '../fixtures/user.js';
+import { VALIDATION_ERROR, USER_NOT_FOUND_ERROR, USER_EXISTS_ERROR } from '../fixtures/error.js';
+import { UPDATE_USER_REQUEST, CREATE_USER_REQUEST } from '../fixtures/request.js';
 
 const mockSuccess = vi.fn();
 const mockError = vi.fn();
@@ -24,7 +24,6 @@ vi.mock('@/stores/notificationStore', () => ({
         error: mockError
     })
 }));
-
 
 describe('userStore', () => {
     beforeEach(() => {

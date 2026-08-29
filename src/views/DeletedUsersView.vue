@@ -1,5 +1,5 @@
 <script setup></script>
 
-<template></template>
+<template>DeletedUsersView</template>
 
 <style scoped></style>

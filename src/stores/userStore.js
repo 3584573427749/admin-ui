@@ -92,7 +92,7 @@ export const useUserStore = defineStore('usersStore', () => {
             notificationStore.success('Användaren togs bort.');
 
             await loadUsers();
-            if(users.value.length > 0){
+            if (users.value.length > 0) {
                 selectUser(users.value[0]);
             } else {
                 createNewUser();
