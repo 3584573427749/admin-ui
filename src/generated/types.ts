@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    '/users': {
+    "/users": {
         parameters: {
             query?: never;
             header?: never;
@@ -12,17 +12,17 @@ export interface paths {
             cookie?: never;
         };
         /** Get all users */
-        get: operations['getAllUsers'];
+        get: operations["getAllUsers"];
         put?: never;
         /** Create user */
-        post: operations['createUser'];
+        post: operations["createUser"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    '/users/{id}': {
+    "/users/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -30,18 +30,18 @@ export interface paths {
             cookie?: never;
         };
         /** Get user by ID */
-        get: operations['getUserById'];
+        get: operations["getUserById"];
         /** Update user */
-        put: operations['updateUser'];
+        put: operations["updateUser"];
         post?: never;
         /** Delete user */
-        delete: operations['deleteUser'];
+        delete: operations["deleteUser"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    '/users/{id}/permanent': {
+    "/users/{id}/permanent": {
         parameters: {
             query?: never;
             header?: never;
@@ -52,13 +52,13 @@ export interface paths {
         put?: never;
         post?: never;
         /** Permanently delete user */
-        delete: operations['permanentlyDeleteUser'];
+        delete: operations["permanentlyDeleteUser"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    '/roles': {
+    "/roles": {
         parameters: {
             query?: never;
             header?: never;
@@ -66,17 +66,17 @@ export interface paths {
             cookie?: never;
         };
         /** Get all roles */
-        get: operations['getAllRoles'];
+        get: operations["getAllRoles"];
         put?: never;
         /** Create role */
-        post: operations['createRole'];
+        post: operations["createRole"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    '/roles/{id}': {
+    "/roles/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -84,18 +84,18 @@ export interface paths {
             cookie?: never;
         };
         /** Get role by id */
-        get: operations['getRole'];
+        get: operations["getRole"];
         /** Update role */
-        put: operations['updateRole'];
+        put: operations["updateRole"];
         post?: never;
         /** Delete role */
-        delete: operations['deleteRole'];
+        delete: operations["deleteRole"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    '/users/{id}/roles': {
+    "/users/{id}/roles": {
         parameters: {
             query?: never;
             header?: never;
@@ -103,17 +103,17 @@ export interface paths {
             cookie?: never;
         };
         /** Get roles for user */
-        get: operations['getUserRoles'];
+        get: operations["getUserRoles"];
         put?: never;
         /** Add role to user */
-        post: operations['addRoleToUser'];
+        post: operations["addRoleToUser"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    '/users/{id}/roles/{roleId}': {
+    "/users/{id}/roles/{roleId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -124,13 +124,13 @@ export interface paths {
         put?: never;
         post?: never;
         /** Remove role from user */
-        delete: operations['removeRoleFromUser'];
+        delete: operations["removeRoleFromUser"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    '/roles/{id}/users': {
+    "/roles/{id}/users": {
         parameters: {
             query?: never;
             header?: never;
@@ -138,8 +138,62 @@ export interface paths {
             cookie?: never;
         };
         /** Get users with role */
-        get: operations['getUsersWithRole'];
+        get: operations["getUsersWithRole"];
         put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/group-levels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all group levels */
+        get: operations["getGroupLevels"];
+        put?: never;
+        /** Create group level */
+        post: operations["createGroupLevel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/group-levels/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get group level by ID */
+        get: operations["getGroupLevelById"];
+        /** Update group level by ID */
+        put: operations["updateGroupLevelById"];
+        post?: never;
+        /** Delete group level by ID */
+        delete: operations["deleteGroupLevelById"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/group-levels/sortorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update group level sort order */
+        put: operations["updateGroupLevelSortOrder"];
         post?: never;
         delete?: never;
         options?: never;
@@ -256,6 +310,57 @@ export interface components {
             /** Format: date-time */
             updatedAt: string | null;
         };
+        CreateGroupLevelRequest: {
+            /** @example Beginner */
+            name: string;
+            /** @example A group for beginners */
+            description?: string;
+            /** @example 1 */
+            sortOrder: number;
+        };
+        UpdateGroupLevelRequest: {
+            /**
+             * Format: uuid
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /** @example Beginner */
+            name: string;
+            /** @example A group for beginners */
+            description?: string;
+            /** @example 1 */
+            sortOrder: number;
+            /** Format: date-time */
+            createdAt?: string | null;
+            /** Format: date-time */
+            updatedAt?: string | null;
+        };
+        UpdateGroupLevelSortOrderRequest: {
+            /**
+             * Format: uuid
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /** @example 1 */
+            sortOrder: number;
+        }[];
+        GroupLevel: {
+            /**
+             * Format: uuid
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /** @example Beginner */
+            name: string;
+            /** @example A group for beginners */
+            description: string;
+            /** @example 1 */
+            sortOrder: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string | null;
+        };
     };
     responses: never;
     parameters: never;
@@ -280,10 +385,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 200 */
                         statusCode: number;
-                        data: components['schemas']['User'][];
+                        data: components["schemas"]["User"][];
                     };
                 };
             };
@@ -298,7 +403,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                'application/json': components['schemas']['CreateUserRequest'];
+                "application/json": components["schemas"]["CreateUserRequest"];
             };
         };
         responses: {
@@ -308,9 +413,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         statusCode: number;
-                        data: components['schemas']['User'];
+                        data: components["schemas"]["User"];
                     };
                 };
             };
@@ -320,10 +425,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 409 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -333,10 +438,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 422 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -359,10 +464,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 200 */
                         statusCode: number;
-                        data: components['schemas']['User'];
+                        data: components["schemas"]["User"];
                     };
                 };
             };
@@ -372,10 +477,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 400 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -385,10 +490,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -405,7 +510,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                'application/json': components['schemas']['UpdateUserRequest'];
+                "application/json": components["schemas"]["UpdateUserRequest"];
             };
         };
         responses: {
@@ -415,10 +520,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 200 */
                         statusCode: number;
-                        data: components['schemas']['User'];
+                        data: components["schemas"]["User"];
                     };
                 };
             };
@@ -428,10 +533,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -441,10 +546,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 409 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -454,10 +559,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 422 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -487,10 +592,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -520,10 +625,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -544,10 +649,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 200 */
                         statusCode: number;
-                        data: components['schemas']['Role'][];
+                        data: components["schemas"]["Role"][];
                     };
                 };
             };
@@ -562,7 +667,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                'application/json': components['schemas']['CreateRoleRequest'];
+                "application/json": components["schemas"]["CreateRoleRequest"];
             };
         };
         responses: {
@@ -572,10 +677,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 201 */
                         statusCode: number;
-                        data: components['schemas']['Role'];
+                        data: components["schemas"]["Role"];
                     };
                 };
             };
@@ -585,10 +690,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 409 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -598,10 +703,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 422 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -622,10 +727,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 200 */
                         statusCode: number;
-                        data: components['schemas']['Role'];
+                        data: components["schemas"]["Role"];
                     };
                 };
             };
@@ -635,10 +740,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 400 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -648,10 +753,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -668,7 +773,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                'application/json': components['schemas']['UpdateRoleRequest'];
+                "application/json": components["schemas"]["UpdateRoleRequest"];
             };
         };
         responses: {
@@ -678,10 +783,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 200 */
                         statusCode: number;
-                        data: components['schemas']['Role'];
+                        data: components["schemas"]["Role"];
                     };
                 };
             };
@@ -691,10 +796,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -704,10 +809,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 409 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -717,10 +822,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 422 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -750,10 +855,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -776,10 +881,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 200 */
                         statusCode: number;
-                        data: components['schemas']['Role'][];
+                        data: components["schemas"]["Role"][];
                     };
                 };
             };
@@ -789,10 +894,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 400 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -802,10 +907,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -822,7 +927,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                'application/json': {
+                "application/json": {
                     /** Format: uuid */
                     roleId: string;
                 };
@@ -842,10 +947,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 400 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -855,10 +960,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -868,10 +973,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 409 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -902,10 +1007,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 400 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -915,10 +1020,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -941,10 +1046,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 200 */
                         statusCode: number;
-                        data: components['schemas']['User'][];
+                        data: components["schemas"]["User"][];
                     };
                 };
             };
@@ -954,10 +1059,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };
@@ -967,10 +1072,328 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': {
+                    "application/json": {
                         /** @example 404 */
                         statusCode: number;
-                        error: components['schemas']['ErrorResponse'];
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getGroupLevels: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of group levels */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["GroupLevel"][];
+                    };
+                };
+            };
+        };
+    };
+    createGroupLevel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateGroupLevelRequest"];
+            };
+        };
+        responses: {
+            /** @description Group level created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        statusCode: number;
+                        data: components["schemas"]["GroupLevel"];
+                    };
+                };
+            };
+            /** @description Invalid JSON */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group level already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 409 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 422 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getGroupLevelById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Group level found */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["GroupLevel"];
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group level not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    updateGroupLevelById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateGroupLevelRequest"];
+            };
+        };
+        responses: {
+            /** @description Group level updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["GroupLevel"];
+                    };
+                };
+            };
+            /** @description Invalid JSON */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group level not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group level already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 409 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 422 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    deleteGroupLevelById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Group level deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Invalid id */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group level not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    updateGroupLevelSortOrder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateGroupLevelSortOrderRequest"];
+            };
+        };
+        responses: {
+            /** @description Group level sort order updated */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Invalid id */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 422 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
                     };
                 };
             };

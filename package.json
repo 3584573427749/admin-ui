@@ -8,7 +8,7 @@
         "build": "vite build",
         "preview": "vite preview",
         "lint": "eslint src --fix",
-        "format": "prettier --write .",
+        "format": "prettier --wriste .",
         "format:check": "prettier --check .",
         "generate-types": "openapi-typescript openapi.yaml -o src/generated/types.ts",
         "test:unit": "vitest run",

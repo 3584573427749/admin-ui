@@ -793,6 +793,344 @@ paths:
                                     error:
                                         $ref: '#/components/schemas/ErrorResponse'
 
+    /group-levels:
+        get:
+            summary: Get all group levels
+            operationId: getGroupLevels
+            tags:
+                - Group Levels
+            responses:
+                '200':
+                    description: A list of group levels
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/GroupLevel'
+
+        post:
+            summary: Create group level
+            operationId: createGroupLevel
+            tags:
+                - Group Levels
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateGroupLevelRequest'
+            responses:
+                '201':
+                    description: Group level created
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                    data:
+                                        $ref: '#/components/schemas/GroupLevel'
+                '400':
+                    description: Invalid JSON
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '409':
+                    description: Group level already exists
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 409
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '422':
+                    description: Validation error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 422
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+    /group-levels/{id}:
+        get:
+            summary: Get group level by ID
+            operationId: getGroupLevelById
+            tags:
+                - Group Levels
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            responses:
+                '200':
+                    description: Group level found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        $ref: '#/components/schemas/GroupLevel'
+                '400':
+                    description: Bad request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: Group level not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+        put:
+            summary: Update group level by ID
+            operationId: updateGroupLevelById
+            tags:
+                - Group Levels
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      format: uuid
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateGroupLevelRequest'
+            responses:
+                '200':
+                    description: Group level updated
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - data
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 200
+                                    data:
+                                        $ref: '#/components/schemas/GroupLevel'
+                '400':
+                    description: Invalid JSON
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 400
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: Group level not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '409':
+                    description: Group level already exists
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 409
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '422':
+                    description: Validation error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 422
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+
+        delete:
+            summary: Delete group level by ID
+            operationId: deleteGroupLevelById
+            tags:
+                - Group Levels
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+            responses:
+                '204':
+                    description: Group level deleted
+                '400':
+                    description: Invalid id
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 400
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                '404':
+                    description: Group level not found
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 404
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+    /group-levels/sortorder:
+        put:
+            summary: Update group level sort order
+            operationId: updateGroupLevelSortOrder
+            tags:
+                - Group Levels
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateGroupLevelSortOrderRequest'
+            responses:
+                204:
+                    description: Group level sort order updated
+                '400':
+                    description: Invalid id
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 400
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+                422:
+                    description: Validation error
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                required:
+                                    - statusCode
+                                    - error
+                                properties:
+                                    statusCode:
+                                        type: integer
+                                        example: 422
+                                    error:
+                                        $ref: '#/components/schemas/ErrorResponse'
+
 components:
     schemas:
         ErrorResponse:
@@ -997,6 +1335,101 @@ components:
                 adminLevel:
                     type: integer
                     example: 100
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+
+        CreateGroupLevelRequest:
+            type: object
+            required:
+                - name
+                - sortOrder
+            properties:
+                name:
+                    type: string
+                    minLength: 2
+                    example: Beginner
+                description:
+                    type: string
+                    example: A group for beginners
+                sortOrder:
+                    type: integer
+                    example: 1
+
+        UpdateGroupLevelRequest:
+            type: object
+            required:
+                - id
+                - name
+                - sortOrder
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                    example: 123e4567-e89b-12d3-a456-426614174000
+                name:
+                    type: string
+                    minLength: 2
+                    example: Beginner
+                description:
+                    type: string
+                    example: A group for beginners
+                sortOrder:
+                    type: integer
+                    example: 1
+                createdAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+                updatedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+
+        UpdateGroupLevelSortOrderRequest:
+            type: array
+            items:
+                type: object
+                required:
+                    - id
+                    - sortOrder
+                properties:
+                    id:
+                        type: string
+                        format: uuid
+                        example: 123e4567-e89b-12d3-a456-426614174000
+                    sortOrder:
+                        type: integer
+                        example: 1
+
+        GroupLevel:
+            type: object
+            required:
+                - id
+                - name
+                - description
+                - sortOrder
+                - createdAt
+                - updatedAt
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                    example: 123e4567-e89b-12d3-a456-426614174000
+                name:
+                    type: string
+                    minLength: 2
+                    example: Beginner
+                description:
+                    type: string
+                    example: A group for beginners
+                sortOrder:
+                    type: integer
+                    example: 1
                 createdAt:
                     type: string
                     format: date-time
