@@ -65,6 +65,16 @@ export const router = createRouter({
                     component: () => import('../views/GroupLevelsView.vue')
                 },
                 {
+                    path: 'grupp',
+                    name: 'groups',
+                    component: () => import('../views/GroupsView.vue')
+                },
+                {
+                    path: 'grupp/:id',
+                    name: 'group',
+                    component: () => import('../views/GroupsView.vue')
+                },
+                {
                     path: 'about',
                     name: 'about',
                     component: AboutView
