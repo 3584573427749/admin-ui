@@ -2,8 +2,8 @@
 import { onMounted, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter, useRoute } from 'vue-router';
-import { useGroupStore } from '@/stores/userStore.js';
-import UserInfoTab from '@/components/groups/UserInfoTab.vue';
+import { useGroupStore } from '@/stores/groupStore.js';
+import GroupInfoTab from '@/components/groups/GroupInfoTab.vue';
 
 const router = useRouter();
 const route = useRoute();

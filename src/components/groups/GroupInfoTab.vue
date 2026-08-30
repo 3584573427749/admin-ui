@@ -64,10 +64,14 @@ async function saveGroup() {
       />
       <v-checkbox
         v-model="selectedGroup.active"
+        :true-value="1"
+        :false-value="0"
         label="Aktiv"
       />
       <v-checkbox
         v-model="selectedGroup.competitive"
+        :true-value="1"
+        :false-value="0"
         label="Tävlar"
       />
       <v-textarea

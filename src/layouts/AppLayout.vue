@@ -21,7 +21,7 @@ const menuItems = [
         label: 'Grupper',
         subItems: [
             { label: 'Gruppnivåer', route: '/gruppniva' },
-            { label: 'Gruppinfo', route: '/groupsView' }
+            { label: 'Gruppinfo', route: '/grupp' }
         ]
     },
     {

@@ -11,8 +11,8 @@ function newGroup() {
         groupLevelId: '',
         venue: '',
         description: '',
-        active: false,
-        competitive: false,
+        active: 0,
+        competitive: 0,
         createdAt: null,
         updatedAt: null
     };
