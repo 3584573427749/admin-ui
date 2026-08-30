@@ -1,27 +1,47 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useGroupStore } from '@/stores/groupStore.js';
 import { storeToRefs } from 'pinia';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
-import router from '@/router/index.js';
-import { useGroupLevelStore } from '@/stores/groupLevelStore.js';
 
 const groupStore = useGroupStore();
+const { selectedGroup, selectedLeader, users, groupLeaders } = storeToRefs(groupStore);
 
-const { selectedLeader, users } = storeToRefs(groupStore);
+const roles = ['Ledare', 'Assistent', 'Utbildare'];
 const showDeleteDialog = ref(false);
+const leaderToDelete = ref(null);
 
 onMounted(async () => {
     await groupStore.loadUsers();
 });
 
-const roles = ['Ledare', 'Assistent', 'Utbildare'];
+watch(
+    () => selectedGroup.value.id,
+    async (id) => {
+        if (!id) {
+            return;
+        }
+
+        await groupStore.loadGroupLeaders();
+    },
+    {
+        immediate: true
+    }
+);
+
+function removeLeader(leader) {
+    leaderToDelete.value = leader;
+    showDeleteDialog.value = true;
+}
+function selectLeader(leader) {
+    selectedLeader.value = {
+        userId: leader.id,
+        role: leader.role
+    };
+}
 
 function saveLeader() {
     groupStore.saveLeader();
-}
-function removeLeader() {
-    console.log(selectedLeader.value);
 }
 
 function createNewLeader() {
@@ -36,11 +56,10 @@ function createNewLeader() {
   <ConfirmDialog
     v-model="showDeleteDialog"
     title="Ta bort gruppledare"
-    text="Vill du verkligen ta bort  gruppen?"
+    :text="`Vill du verkligen ta bort ${leaderToDelete?.fullName ?? ''} från gruppen?`"
     confirm-text="Ta bort"
-    @confirm="removeLeader"
+    @confirm="groupStore.deleteLeader(leaderToDelete.id)"
   />
-
   <div class="leader-form">
     <v-select
       v-model="selectedLeader.userId"
@@ -73,6 +92,36 @@ function createNewLeader() {
       </v-btn>
     </div>
   </div>
+  <div class="list-header">
+    <span>Namn</span>
+    <span>Roll</span>
+  </div>
+  <ul class="list">
+    <li
+      v-for="leader in groupLeaders"
+      :key="leader.id"
+      class="list-item leader-row"
+    >
+      <span> {{ leader.fullName }} </span>
+
+      <span>
+        {{ leader.role }}
+      </span>
+
+      <div class="leader-row__actions">
+        <v-icon
+          icon="mdi-pencil"
+          @click="selectLeader(leader)"
+        />
+
+        <v-icon
+          icon="mdi-delete"
+          color="error"
+          @click="removeLeader(leader)"
+        />
+      </div>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
@@ -86,7 +135,28 @@ function createNewLeader() {
 
     margin-top: 2rem;
 }
-.role-panel :deep(.v-checkbox) {
-    --v-input-control-height: 28px;
+.leader-row {
+    display: grid;
+    grid-template-columns: 1fr 120px 80px;
+    align-items: center;
+}
+
+.leader-row__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.list-header {
+    display: grid;
+    grid-template-columns: 1fr 120px 80px;
+
+    padding: 0.5rem;
+
+    font-weight: 600;
+}
+
+.leader-row :deep(.v-icon) {
+    cursor: pointer;
 }
 </style>

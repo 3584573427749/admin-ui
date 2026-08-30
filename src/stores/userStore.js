@@ -17,7 +17,7 @@ function newUser() {
     };
 }
 
-export const useGroupStore = defineStore('usersStore', () => {
+export const useUserStore = defineStore('usersStore', () => {
     const notificationStore = useNotificationStore();
     const users = ref([]);
     const selectedUser = ref(newUser());

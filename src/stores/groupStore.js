@@ -156,7 +156,10 @@ Gruppledare
         }
 
         try {
-            groupLeaders.value = await groupService.getGroupLeaders(id);
+            groupLeaders.value = (await groupService.getGroupLeaders(id)).map((leader) => ({
+                ...leader,
+                fullName: `${leader.firstName} ${leader.lastName}`
+            }));
         } catch (error) {
             notificationStore.error(error);
 
