@@ -18,10 +18,23 @@ function newGroup() {
     };
 }
 
+function newLeader() {
+    return {
+        userId: '',
+        role: ''
+    };
+}
 export const useGroupStore = defineStore('groupsStore', () => {
     const notificationStore = useNotificationStore();
     const groups = ref([]);
     const selectedGroup = ref(newGroup());
+    const groupLeaders = ref([]);
+    const selectedLeader = ref({
+        userId: '',
+        role: ''
+    });
+
+    const users = ref([]);
 
     const loading = ref(false);
 
@@ -33,6 +46,9 @@ export const useGroupStore = defineStore('groupsStore', () => {
         selectedGroup.value = newGroup();
     }
 
+    function createNewLeader() {
+        selectedLeader.value = newLeader();
+    }
     async function loadGroups() {
         loading.value = true;
 
@@ -107,7 +123,99 @@ export const useGroupStore = defineStore('groupsStore', () => {
             throw error;
         }
     }
+    /*
+Gruppledare
+ */
+    /**
+     * Hämta alla aktuella ledare
+     * @returns {Promise<void>}
+     */
+    async function loadUsers() {
+        try {
+            users.value = (await groupService.getUsers()).map((user) => ({
+                ...user,
+                fullName: `${user.firstName} ${user.lastName}`
+            }));
+        } catch (error) {
+            notificationStore.error(error);
 
+            throw error;
+        }
+    }
+
+    /**
+     * Hämta gruppens ledare
+     * @returns {Promise<void>}
+     */
+    async function loadGroupLeaders() {
+        const { id } = selectedGroup.value;
+
+        if (!id) {
+            groupLeaders.value = [];
+            return;
+        }
+
+        try {
+            groupLeaders.value = await groupService.getGroupLeaders(id);
+        } catch (error) {
+            notificationStore.error(error);
+
+            throw error;
+        }
+    }
+
+    /**
+     * Välj ledare att redigera
+     * @param leader
+     */
+    function selectLeader(leader) {
+        selectedLeader.value = {
+            userId: leader.id,
+            role: leader.role
+        };
+    }
+
+    /**
+     * Spara ledare
+     * @returns {Promise<void>}
+     */
+    async function saveLeader() {
+        try {
+            await groupService.saveGroupLeader(selectedGroup.value.id, {
+                ...selectedLeader.value,
+                groupId: selectedGroup.value.id
+            });
+
+            notificationStore.success('Ledaren sparades.');
+
+            await loadGroupLeaders();
+
+            createNewLeader();
+        } catch (error) {
+            notificationStore.error(error);
+
+            throw error;
+        }
+    }
+
+    /**
+     * Radera ledare
+     * @param userId
+     * @returns {Promise<void>}
+     */
+    async function deleteLeader(userId) {
+        try {
+            await groupService.deleteGroupLeader(selectedGroup.value.id, userId);
+
+            notificationStore.success('Ledaren togs bort.');
+
+            await loadGroupLeaders();
+        } catch (error) {
+            notificationStore.error(error);
+
+            throw error;
+        }
+    }
     return {
         groups,
         selectedGroup,
@@ -119,6 +227,19 @@ export const useGroupStore = defineStore('groupsStore', () => {
         loadGroups,
         loadGroup,
         saveGroup,
-        deleteSelectedGroup
+        deleteSelectedGroup,
+
+        groupLeaders,
+        selectedLeader,
+        users,
+
+        createNewLeader,
+
+        loadGroupLeaders,
+        loadUsers,
+
+        selectLeader,
+        saveLeader,
+        deleteLeader
     };
 });

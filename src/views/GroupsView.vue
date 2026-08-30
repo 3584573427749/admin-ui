@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import { useRouter, useRoute } from 'vue-router';
 import { useGroupStore } from '@/stores/groupStore.js';
 import GroupInfoTab from '@/components/groups/GroupInfoTab.vue';
+import GroupLeadersTab from '@/components/groups/GroupLeadersTab.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -71,10 +72,12 @@ watch(
 
         <div class="tab-panel__content">
           <v-window v-model="activeTab">
-            <GroupInfoTab />
+            <v-window-item value="info">
+              <GroupInfoTab />
+            </v-window-item>
 
             <v-window-item value="leaders">
-              <p>Ledarhantering</p>
+              <GroupLeadersTab />
             </v-window-item>
           </v-window>
         </div>

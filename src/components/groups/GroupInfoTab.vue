@@ -41,69 +41,68 @@ async function saveGroup() {
     confirm-text="Ta bort"
     @confirm="removeGroup"
   />
-  <v-window-item value="info">
-    <div
-      class="group-form"
-      density="compact"
-    >
-      <v-text-field
-        v-model="selectedGroup.name"
-        label="Namn"
-      />
-      <v-select
-        v-model="selectedGroup.groupLevelId"
-        label="Gruppnivå"
-        :items="groupLevels"
-        item-title="name"
-        item-value="id"
-      />
-      <v-select
-        v-model="selectedGroup.venue"
-        label="Anläggning"
-        :items="['Mariebad', 'Ålands Idrottscenter']"
-      />
-      <v-checkbox
-        v-model="selectedGroup.active"
-        :true-value="1"
-        :false-value="0"
-        label="Aktiv"
-      />
-      <v-checkbox
-        v-model="selectedGroup.competitive"
-        :true-value="1"
-        :false-value="0"
-        label="Tävlar"
-      />
-      <v-textarea
-        v-model="selectedGroup.description"
-        label="Beskrivning"
-        rows="4"
-      />
 
-      <div class="button-row">
-        <v-btn
-          color="primary"
-          @click="saveGroup"
-        >
-          Spara
-        </v-btn>
-        <v-btn
-          color="error"
-          variant="outlined"
-          @click="showDeleteDialog = true"
-        >
-          Radera
-        </v-btn>
-        <v-btn
-          color="success"
-          variant="outlined"
-          @click="groupStore.createNewGroup"
-        >
-          Ny
-        </v-btn>
-      </div>
+  <div
+    class="group-form"
+    density="compact"
+  >
+    <v-text-field
+      v-model="selectedGroup.name"
+      label="Namn"
+    />
+    <v-select
+      v-model="selectedGroup.groupLevelId"
+      label="Gruppnivå"
+      :items="groupLevels"
+      item-title="name"
+      item-value="id"
+    />
+    <v-select
+      v-model="selectedGroup.venue"
+      label="Anläggning"
+      :items="['Mariebad', 'Ålands Idrottscenter']"
+    />
+    <v-checkbox
+      v-model="selectedGroup.active"
+      :true-value="1"
+      :false-value="0"
+      label="Aktiv"
+    />
+    <v-checkbox
+      v-model="selectedGroup.competitive"
+      :true-value="1"
+      :false-value="0"
+      label="Tävlar"
+    />
+    <v-textarea
+      v-model="selectedGroup.description"
+      label="Beskrivning"
+      rows="4"
+    />
+
+    <div class="button-row">
+      <v-btn
+        color="primary"
+        @click="saveGroup"
+      >
+        Spara
+      </v-btn>
+      <v-btn
+        color="error"
+        variant="outlined"
+        @click="showDeleteDialog = true"
+      >
+        Radera
+      </v-btn>
+      <v-btn
+        color="success"
+        variant="outlined"
+        @click="groupStore.createNewGroup"
+      >
+        Ny
+      </v-btn>
     </div>
-  </v-window-item>
+  </div>
 </template>
 
 <style scoped>

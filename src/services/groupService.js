@@ -56,3 +56,47 @@ export async function updateGroup(id, group) {
 export async function deleteGroup(id) {
     await api.delete(`/group/groups/${id}`);
 }
+
+/*
+ * Group leaders
+ */
+/**
+ * Hämtar gruppens ledare
+ * @param groupId
+ * @returns {Promise<*>}
+ */
+export async function getGroupLeaders(groupId) {
+    const response = await api.get(`/group/groups/${groupId}/users`);
+
+    return response.data;
+}
+
+/**
+ * Lägger till/Uppdaterar ledarinfo för aktuell grupp
+ * @param groupId
+ * @param leader
+ * @returns {Promise<void>}
+ */
+export async function saveGroupLeader(groupId, leader) {
+    await api.post(`/group/groups/${groupId}/users`, leader);
+}
+
+/**
+ * Raderar ledare för gruppen
+ * @param groupId
+ * @param userId
+ * @returns {Promise<void>}
+ */
+export async function deleteGroupLeader(groupId, userId) {
+    await api.delete(`/group/groups/${groupId}/users/${userId}`);
+}
+
+/**
+ * Hämtar alla ledare
+ * @returns {Promise<*>}
+ */
+export async function getUsers() {
+    const response = await api.get('/group/users');
+
+    return response.data;
+}
