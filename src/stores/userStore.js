@@ -3,6 +3,7 @@ import { ref, toRaw } from 'vue';
 import { useNotificationStore } from '@/stores/notificationStore';
 
 import * as userService from '@/services/userService';
+import * as groupService from '@/services/groupService.js';
 
 function newUser() {
     return {
@@ -21,7 +22,12 @@ export const useUserStore = defineStore('usersStore', () => {
     const notificationStore = useNotificationStore();
     const users = ref([]);
     const selectedUser = ref(newUser());
+    const userGroups = ref([]);
 
+    const selectedGroup = ref({
+        groupId: '',
+        role: ''
+    });
     const loading = ref(false);
 
     function selectUser(user) {
@@ -105,9 +111,19 @@ export const useUserStore = defineStore('usersStore', () => {
         }
     }
 
+    async function loadUserGroups() {
+        if (!selectedUser.value.id) {
+            userGroups.value = [];
+            return;
+        }
+
+        userGroups.value = await groupService.getUserGroups(selectedUser.value.id);
+    }
+
     return {
         users,
         selectedUser,
+        userGroups,
         loading,
 
         selectUser,
@@ -116,6 +132,9 @@ export const useUserStore = defineStore('usersStore', () => {
         loadUsers,
         loadUser,
         saveUser,
-        deleteSelectedUser
+        deleteSelectedUser,
+
+        loadUserGroups,
+        selectedGroup
     };
 });

@@ -100,3 +100,14 @@ export async function getUsers() {
 
     return response.data;
 }
+
+/**
+ * Hämtar alla grupper för en ledare
+ * @param userId
+ * @returns {Promise<*>}
+ */
+export async function getUserGroups(userId) {
+    const response = await api.get(`/group/users/${userId}/groups`);
+
+    return response.data;
+}

@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/stores/userStore.js';
 import UserInfoTab from '@/components/users/UserInfoTab.vue';
+import UserGroupsTab from '@/components/users/UserGroupsTab.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -78,7 +79,7 @@ watch(
             <UserInfoTab />
 
             <v-window-item value="groups">
-              <p>Grupphantering kommer i senare version.</p>
+              <UserGroupsTab />
             </v-window-item>
 
             <v-window-item value="other">
