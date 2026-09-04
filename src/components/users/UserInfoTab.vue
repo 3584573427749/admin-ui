@@ -6,6 +6,7 @@ import { storeToRefs } from 'pinia';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
 import router from '@/router/index.js';
 
+const emit = defineEmits(['saved']);
 const userStore = useUserStore();
 const roleStore = useRoleStore();
 
@@ -44,7 +45,7 @@ async function removeUser() {
 
 async function saveUser() {
     await userStore.saveUser();
-
+    emit('saved');
     router.push(`/anvandare/${selectedUser.value.id}`);
 }
 </script>

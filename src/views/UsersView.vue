@@ -5,16 +5,21 @@ import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/stores/userStore.js';
 import UserInfoTab from '@/components/users/UserInfoTab.vue';
 import UserGroupsTab from '@/components/users/UserGroupsTab.vue';
+import { useRoleStore } from '@/stores/roleStore.js';
 
 const router = useRouter();
 const route = useRoute();
 const userStore = useUserStore();
 const { users, selectedUser } = storeToRefs(userStore);
 
+const roleStore = useRoleStore();
+const { roles } = storeToRefs(roleStore);
 const activeTab = ref('info');
+const showGroupsTab = ref(false);
 
 onMounted(async () => {
     await userStore.loadUsers();
+    await roleStore.loadRoles();
 
     if (!route.params.id && users.value.length > 0) {
         router.replace(`/anvandare/${users.value[0].id}`);
@@ -29,9 +34,15 @@ watch(
         }
 
         await userStore.loadUser(id);
+        updateGroupsTabVisibility();
     },
     { immediate: true }
 );
+function updateGroupsTabVisibility() {
+    const leaderRole = roles.value.find((role) => role.name === 'Ledare');
+
+    showGroupsTab.value = !!leaderRole && selectedUser.value.roles.includes(leaderRole.id);
+}
 </script>
 
 <template>
@@ -65,7 +76,10 @@ watch(
             Information
           </v-tab>
 
-          <v-tab value="groups">
+          <v-tab
+            v-show="showGroupsTab"
+            value="groups"
+          >
             Grupper
           </v-tab>
 
@@ -76,7 +90,7 @@ watch(
 
         <div class="tab-panel__content">
           <v-window v-model="activeTab">
-            <UserInfoTab />
+            <UserInfoTab @saved="updateGroupsTabVisibility()" />
 
             <v-window-item value="groups">
               <UserGroupsTab />
