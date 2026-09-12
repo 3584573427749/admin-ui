@@ -35,7 +35,7 @@ function removeLeader(leader) {
 }
 function selectLeader(leader) {
     selectedLeader.value = {
-        userId: leader.id,
+        userId: leader.userId,
         role: leader.role
     };
 }

@@ -43,7 +43,7 @@ function removeGroup(group) {
 
 function selectGroup(group) {
     selectedGroup.value = {
-        groupId: group.id,
+        groupId: group.groupId,
         role: group.role
     };
 }
@@ -90,7 +90,7 @@ async function deleteSelectedGroup() {
     />
 
     <v-select
-      v-model="selectedLeader.role"
+      v-model="selectedGroup.role"
       :items="roles"
       label="Roll"
     />

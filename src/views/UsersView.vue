@@ -34,6 +34,7 @@ watch(
         }
 
         await userStore.loadUser(id);
+        activeTab.value = 'info';
         updateGroupsTabVisibility();
     },
     { immediate: true }
