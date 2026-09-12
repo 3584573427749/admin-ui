@@ -1,0 +1,40 @@
+version: 2
+
+updates:
+    - package-ecosystem: npm
+      directory: '/'
+      schedule:
+          interval: weekly
+
+      groups:
+          vue:
+              patterns:
+                  - vue
+                  - vue-router
+                  - pinia
+                  - vuetify
+
+          vite:
+              patterns:
+                  - vite
+                  - '@vitejs/*'
+
+          testing:
+              patterns:
+                  - vitest
+                  - '@vitest/*'
+                  - '@vue/test-utils'
+                  - playwright
+                  - '@playwright/*'
+
+          linting:
+              patterns:
+                  - eslint*
+                  - prettier
+                  - oxlint
+
+      commit-message:
+          prefix: chore
+
+      labels:
+          - dependencies

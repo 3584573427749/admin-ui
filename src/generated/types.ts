@@ -201,6 +201,100 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all groups */
+        get: operations["getGroups"];
+        put?: never;
+        /** Create group */
+        post: operations["createGroup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/groups/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get group by ID */
+        get: operations["getGroupById"];
+        /** Update group by ID */
+        put: operations["updateGroupById"];
+        post?: never;
+        /**
+         * Delete group by ID
+         * @description Delete a group by its unique identifier
+         */
+        delete: operations["deleteGroupById"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/groups/{id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all leaders for group */
+        get: operations["getGroupLeaders"];
+        put?: never;
+        /** Add or updates leader for group */
+        post: operations["upsertGroupLeaders"];
+        /** Delete all leaders from group */
+        delete: operations["deleteGroupLeaders"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/groups/{id}/users/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete leader for group */
+        delete: operations["deleteGroupLeader"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{id}/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all groups for user */
+        get: operations["getLeaderGroups"];
+        put?: never;
+        post?: never;
+        /** Delete all groups from user */
+        delete: operations["deleteLeaderGroups"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -360,6 +454,124 @@ export interface components {
             createdAt: string;
             /** Format: date-time */
             updatedAt: string | null;
+        };
+        CreateGroupRequest: {
+            /**
+             * Format: uuid
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            groupLevelId: string;
+            /** @example Beginner */
+            name: string;
+            /** @example A group for beginners */
+            description?: string;
+            /**
+             * @example Mariebad
+             * @enum {string}
+             */
+            venue: "Mariebad" | "Ålands Idrottscenter";
+            /**
+             * @example 1
+             * @enum {integer}
+             */
+            active: 0 | 1;
+            /**
+             * @example 1
+             * @enum {integer}
+             */
+            competitive: 0 | 1;
+        };
+        UpdateGroupRequest: {
+            /**
+             * Format: uuid
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /**
+             * Format: uuid
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            groupLevelId: string;
+            /** @example Beginner */
+            name: string;
+            /** @example A group for beginners */
+            description?: string;
+            /**
+             * @example Mariebad
+             * @enum {string}
+             */
+            venue: "Mariebad" | "Ålands Idrottscenter";
+            /**
+             * @example 1
+             * @enum {integer}
+             */
+            active: 0 | 1;
+            /**
+             * @example 1
+             * @enum {integer}
+             */
+            competitive: 0 | 1;
+        };
+        Group: {
+            /**
+             * Format: uuid
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /**
+             * Format: uuid
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            groupLevelId: string;
+            /** @example Beginner */
+            name: string;
+            /** @example A group for beginners */
+            description: string;
+            /**
+             * @example Mariebad
+             * @enum {string}
+             */
+            venue: "Mariebad" | "Ålands Idrottscenter";
+            /**
+             * @example 1
+             * @enum {integer}
+             */
+            active: 0 | 1;
+            /**
+             * @example 1
+             * @enum {integer}
+             */
+            competitive: 0 | 1;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string | null;
+        };
+        Leader: {
+            /** Format: uuid */
+            id: string;
+            firstName: string;
+            lastName: string;
+            /**
+             * @example 1
+             * @enum {integer}
+             */
+            active: 0 | 1;
+            /** Format: date-time */
+            createdAt?: string | null;
+            /** Format: date-time */
+            updatedAt?: string | null;
+        };
+        UpsertGroupLeader: {
+            /** Format: uuid */
+            groupId: string;
+            /** Format: uuid */
+            userId: string;
+            /**
+             * @example Ledare
+             * @enum {string}
+             */
+            role: "Ledare" | "Assistent" | "Utbildare";
         };
     };
     responses: never;
@@ -1392,6 +1604,531 @@ export interface operations {
                 content: {
                     "application/json": {
                         /** @example 422 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getGroups: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of groups */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["Group"][];
+                    };
+                };
+            };
+        };
+    };
+    createGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description Group created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 201 */
+                        statusCode: number;
+                        data: components["schemas"]["Group"];
+                    };
+                };
+            };
+            /** @description Invalid Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 422 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getGroupById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Group found */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["Group"];
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    updateGroupById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description Group updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["Group"];
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group already exists */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 409 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 422 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    deleteGroupById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Group deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Invalid id */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getGroupLeaders: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of Leaders */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["Leader"][];
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    upsertGroupLeaders: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpsertGroupLeader"];
+            };
+        };
+        responses: {
+            /** @description User saved */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Group not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 422 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    deleteGroupLeaders: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    deleteGroupLeader: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Group leader deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    getLeaderGroups: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of groups */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 200 */
+                        statusCode: number;
+                        data: components["schemas"]["Group"][];
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+            /** @description User not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 404 */
+                        statusCode: number;
+                        error: components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+    };
+    deleteLeaderGroups: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 400 */
                         statusCode: number;
                         error: components["schemas"]["ErrorResponse"];
                     };
